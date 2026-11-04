@@ -1,0 +1,344 @@
+#include <iostream>
+#include <stdlib.h>
+#include "App.h"
+#include "Requirement.h"
+#include "UI.h"
+
+App::App()
+{
+    // Start selecting document context
+    ui_state = SYS;
+
+    //load_database();
+
+    //temp
+    AirborneSystem as1("Landing Gear", "LG", 'B');
+    AirborneSystem as2("Motor", "FADEC", 'A');
+    system_list.push_back(as1);
+    system_list.push_back(as2);
+}
+
+void App::load_database()
+{
+    std::cout << "load database" << std::endl;
+}
+
+void App::run()
+{
+    do {
+        switch (ui_state)
+        {
+        case SYS:
+            std::cout << "---Select System---" << std::endl;
+            ui_state = select_system();
+            break;
+        case DOC:
+            std::cout << "---Select Document---" << std::endl;
+            ui_state = select_document();
+            break;
+        case REQ:
+            std::cout << "---Select ACTION---" << std::endl;
+            ui_state = select_action();
+            break;
+        default:
+            break;
+        }
+    } while(ui_state != EXIT);
+}
+
+UIState App::select_system()
+{
+    int option = 0;
+    UIState return_state = EXIT;
+    std::vector<std::string> system_names;
+
+    // Print header
+    system("cls");
+    std::cout << "---Select System---" << std::endl;
+
+    // Aggregate the system names
+    for (int i = 0; i < system_list.size(); i++)
+    {
+        system_names.push_back(system_list.at(i).get_name());
+    }
+    system_names.push_back("Create new system");
+    system_names.push_back("Exit");
+
+    // Run dialog
+    option = UI::options_dialog("Select a system context to work on: ",
+                                system_names);
+
+    // Decide action upon input
+    if (option == system_list.size() + 1)
+    {
+        // Create new AirborneSystem
+        create_system();
+        // load to db
+        return_state = SYS;
+    }
+    else if (option == system_list.size() + 2)
+    {
+        std::cout << "Exiting..." << std::endl;
+        // run check to save?
+        return_state = EXIT;
+    }
+    else
+    {
+        std::cout << "Adding pointer: " << option << std::endl;
+        selected_context = &system_list.at(option - 1);
+        return_state = DOC;
+    }
+
+    return return_state;
+}
+
+UIState App::select_document()
+{
+    int option = 0;
+    UIState return_state = EXIT;
+
+    // Print header
+    system("cls");
+    std::cout << "---Select Document---" << std::endl;
+    std::cout << "System: " << selected_context->get_name() << std::endl;
+
+    // Run dialog
+    option = UI::options_dialog("Select a document to work on: ",
+                                {"CRS", "SRD", "SDD", "Choose another context"});
+
+    // Decide action upon input
+    if (option == 4)
+    {
+        // Go back
+        return_state = SYS;
+    }
+    else
+    {
+        selected_document = (DocType)option;
+        return_state = REQ;
+    }
+
+    return return_state;
+}
+
+UIState App::select_action()
+{
+    int option = 0;
+    UIState return_state = REQ;
+    std::string doc_name = "";
+
+    // Print header
+    system("cls");
+    std::cout << "---Select Action---" << std::endl;
+    std::cout << "System: " << selected_context->get_name() << std::endl;
+    switch (selected_document)
+    {
+    case DOC_CRS:
+        doc_name = "CRS - Component Requirements Specification";
+        break;
+    case DOC_SRD:
+        doc_name = "SRD - Software Requirements Document";
+        break;
+    case DOC_SDD:
+        doc_name = "SDD - Software Design Description";
+        break;
+    default:
+        doc_name = "Invalid document";
+        break;
+    }
+    std::cout << "Document: " << doc_name << std::endl;
+
+    // Run dialog
+    option = UI::options_dialog("Select a document to work on: ",
+                                {"Create requirement",
+                                 "Display requirement",
+                                 "Edit requirement",
+                                 "Delete requirement",
+                                 "Link requirements",
+                                 "Edit document",
+                                 "Export document",
+                                 "Choose another document"});
+
+    // Decide action upon input
+    switch (option)
+    {
+    case 1:
+        create_requirement();
+        break;
+    case 2:
+        display_requirement();
+        break;
+    case 3:
+        edit_requirement();
+        break;
+    case 4:
+        delete_requirement();
+        break;
+    case 5:
+        link_requirements();
+        break;
+    case 6:
+        edit_document();
+        break;
+    case 7:
+        export_document();
+        break;
+    case 8:
+        return_state = DOC;
+        break;
+    default:
+        std::cout << "Invalid option. Try again." << std::endl;
+        break;
+    }
+
+    return return_state;
+}
+
+void App::create_requirement()
+{
+    int option = 0;
+    std::string rid = selected_context->get_id_prefix() + "-" + selected_context->get_id_count();
+    std::string body;
+    std::string comments;
+    ReqType type;
+    ReqLevel level;
+    bool safety;
+    bool derived;
+
+    system("cls");
+    std::cout << "---Create Requirement---" << std::endl;
+
+    body = UI::string_dialog("Write the requirement body below: ");
+
+    comments = UI::string_dialog("Write any relevant comments (e.g. traceability, derived or safety justification): ");
+
+    option = UI::options_dialog("Is it a safety requirement?", {"Yes", "No"});
+    safety = (option == 1) ? true : false;
+
+    option = UI::options_dialog("Is it a derived requirement?", {"Yes", "No"});
+    derived = (option == 1) ? true : false;
+
+    option = UI::options_dialog("What type of requirement is it?", {"Functional", "Non-functional"});
+    type = (option == 1) ? FUNCTIONAL : NON_FUNCTIONAL;
+
+    switch (selected_document)
+    {
+    case DOC_CRS:
+        //SRATS srats(rid, body, comments, type, LEVEL_SRATS, safety, derived);
+        //selected_context->crs_doc.srats_list.push_back(srats);
+        break;
+    case DOC_SRD:
+        //HLR hlr(rid, body, comments, type, LEVEL_HLR, safety, derived);
+        //selected_context->srd_doc.hlr_list.push_back(hlr);
+        break;
+    case DOC_SDD:
+        //LLR llr(rid, body, comments, type, LEVEL_LLR, safety, derived);
+        //selected_context->sdd_doc.llr_list.push_back(llr);
+        break;
+    }
+}
+
+void App::display_requirement()
+{
+    system("cls");
+    std::cout << "---Display Requirement---" << std::endl;
+    // fetch
+    /*std::cout << "Requirement " << rid << std::endl;
+    std::cout << "Safety: " << safety << std::endl;
+    std::cout << "Derived: " << derived << std::endl;
+    std::cout << "Type: " << type ? "functional" : "non-functional" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Description" << std::endl;
+    std::cout << description << std::endl;
+    std::cout << std::endl;
+    std::cout << "Comments" << std::endl;
+    std::cout << comments << std::endl;*/
+}
+
+void App::edit_requirement()
+{
+    system("cls");
+    std::cout << "---Edit Requirement---" << std::endl;
+    // search requirement
+    // ask what needs to be edited
+    // edit the selected field
+    // update db
+}
+
+void App::delete_requirement()
+{
+    system("cls");
+    std::cout << "---Delete Requirement---" << std::endl;
+    // find requirement and delete
+    // update db
+}
+
+void App::link_requirements()
+{
+    system("cls");
+    std::cout << "---Link Requirements---" << std::endl;
+    // find requirement
+    // prompt what requirements will be linked
+    // update db
+}
+
+void App::edit_document()
+{
+    system("cls");
+    std::cout << "---Export Document---" << std::endl;
+
+    switch (selected_document)
+    {
+    case DOC_CRS:
+        //std::cout << selected_context->srd_doc.hlr_list
+        break;
+    case DOC_SRD:
+        break;
+    case DOC_SDD:
+        break;
+    }
+}
+
+void App::export_document()
+{
+    system("cls");
+    std::cout << "---Export Document---" << std::endl;
+
+    switch (selected_document)
+    {
+    case DOC_CRS:
+        //std::cout << selected_context->srd_doc.hlr_list
+        break;
+    case DOC_SRD:
+        break;
+    case DOC_SDD:
+        break;
+    }
+}
+
+void App::create_system()
+{
+    std::string name;
+    std::string id_prefix;
+    char dal;
+
+    system("cls");
+    std::cout << "---Create system---" << std::endl;
+    std::cout << "What is the name of this system?" << std::endl;
+    std::getline(std::cin, name);
+    std::cout << std::endl;
+
+    std::cout << "What prefix the requirements of this system will use?" << std::endl;
+    std::getline(std::cin, id_prefix);
+    std::cout << std::endl;
+
+    std::cout << "What is the DAL of this system?" << std::endl;
+    std::cin >> dal;
+    std::cin.ignore();
+    std::cout << std::endl;
+
+    //as = new AirborneSystem(name, id_prefix, dal);
+    AirborneSystem as(name, id_prefix, dal);
+    system_list.push_back(as);
+}
+

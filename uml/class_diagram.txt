@@ -1,0 +1,103 @@
+@startuml
+
+' RELATIONSHIPS
+
+AirborneSystem *-- CRS
+AirborneSystem *-- SRD
+AirborneSystem *-- SDD
+
+Document <|-- CRS
+Document <|-- SRD
+Document <|-- SDD
+
+CRS o-- SRATS
+SRD o-- HLR
+SDD o-- LLR
+
+Requirement <|-- SRATS
+Requirement <|-- HLR
+Requirement <|-- LLR
+
+SRATS <-- HLR
+HLR <-- LLR
+HLR --> LLR
+
+
+' Force CRS, SRD and SDD to the same visual level
+CRS -[hidden]right- SRD
+SRD -[hidden]right- SDD
+
+' CLASS DECLARATIONS
+
+class AirborneSystem {
+-name: string
+-id_prefix: string
+-crs_doc: CRS
+-srd_doc: SRD
+-sdd_doc: SDD
+-dal: char
+}
+
+class Requirement {
+-rid: string
+-title: string
+-description: string
+-version: int
+-type: enum
+-safety: enum
+-derived: bool
+-comments: string
++display(): void
++edit(): void
++delete(): void
+}
+
+class Document {
+-title: string
+-purpose: string
+-scope: string
+-referenced_docs: string
+-requirements: string
+-acronyms: string
+-appendix: string
++export(): void
+}
+
+class CRS {
+-srats_list: SRATS list
+-system_overview: string
++CRS()
+}
+
+class SRD {
+-hlr_list: HLR list
+-software_overview: string
++SRD()
+}
+
+class SDD {
+-llr_list: LLR list
+-design_overview: string
++SDD()
+}
+
+class SRATS {
+-linked_hlrs: HLR list
++SRATS()
++~SRATS()
+}
+
+class HLR {
+-linked_srats: SRATS list
+-linked_llrs: LLR list
++HLR()
++~HLR()
+}
+
+class LLR {
+-linked_hlrs: HLR list
++LLR()
++~LLR()
+}
+
+@enduml
