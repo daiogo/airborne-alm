@@ -234,38 +234,85 @@ void App::create_requirement()
         selected_context->get_sdd()->add_requirement(LLR(rid, body, comments, type, LEVEL_LLR, safety, derived));
         break;
     }
-/*
-    if (selected_document == DOC_CRS)
-    {
-        selected_context->get_crs()->add_requirement(SRATS(rid, body, comments, type, LEVEL_SRATS, safety, derived));
-    }
-    else if (selected_document == DOC_SRD)
-    {
-        selected_context->get_srd()->add_requirement(HLR(rid, body, comments, type, LEVEL_HLR, safety, derived));
-    }
-    else if (selected_document == DOC_SDD)
-    {
-        selected_context->get_sdd()->add_requirement(LLR(rid, body, comments, type, LEVEL_LLR, safety, derived));
-    }*/
 }
 
 void App::display_requirement()
 {
+    int option = 0;
+    std::string id;
+    Requirement *req_ptr;
+
+    // Print header
     system("cls");
     std::cout << "---Display Requirement---" << std::endl;
-    // fetch from db
 
-    switch (selected_document)
+    // Fetch from db
+    // TBD
+
+    // Run dialog
+    option = UI::options_dialog("Select an option: ",
+                                {"Search requirement by ID", "Print all requirements", "Exit"});
+
+    // Decide action upon input
+    if (option == 1)
     {
-    case DOC_CRS:
-        selected_context->get_crs()->print_requirements_list();
-        break;
-    case DOC_SRD:
-        selected_context->get_srd()->print_requirements_list();
-        break;
-    case DOC_SDD:
-        selected_context->get_sdd()->print_requirements_list();
-        break;
+        id = UI::string_dialog("Type the requirement ID with no spaces: ");
+
+        switch (selected_document)
+        {
+        case DOC_CRS:
+            req_ptr = selected_context->get_crs()->get_requirement(id);
+            break;
+        case DOC_SRD:
+            req_ptr = selected_context->get_srd()->get_requirement(id);
+            break;
+        case DOC_SDD:
+            req_ptr = selected_context->get_sdd()->get_requirement(id);
+            break;
+        }
+
+        if (req_ptr != nullptr)
+        {
+            std::cout << "ID: " << req_ptr->get_rid() << std::endl;
+            std::cout << "Safety: " << req_ptr->get_safety() << std::endl;
+            std::cout << "Derived: " << req_ptr->get_derived() << std::endl;
+            std::cout << "Type: " << (req_ptr->get_type() ? "functional" : "non-functional") << std::endl;
+            std::cout << std::endl;
+            std::cout << "Description: " << std::endl;
+            std::cout << req_ptr->get_body() << std::endl;
+            std::cout << std::endl;
+            std::cout << "Comments: " << std::endl;
+            std::cout << req_ptr->get_comments() << std::endl;
+            std::cout << std::endl;
+            std::cout << "Linked requirements: " << std::endl;
+            std::cout << "TBD" << std::endl;
+        }
+        else
+        {
+            std::cout << "No requirements with this ID were found in this document." << std::endl;
+        }
+
+        system("pause");
+
+    }
+    else if (option == 2)
+    {
+        switch (selected_document)
+        {
+        case DOC_CRS:
+            selected_context->get_crs()->print_requirements_list();
+            break;
+        case DOC_SRD:
+            selected_context->get_srd()->print_requirements_list();
+            break;
+        case DOC_SDD:
+            selected_context->get_sdd()->print_requirements_list();
+            break;
+        }
+    }
+    else
+    {
+        // Do nothing and exit
     }
 }
 
