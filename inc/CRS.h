@@ -1,13 +1,11 @@
 #pragma once
 
 #include "Document.h"
-#include <list>
-#include <string>
 #include "SRATS.h"
+#include <string>
 
-class CRS : public Document {
+class CRS : public Document<SRATS> {
 private:
-    std::list<SRATS> srats_list;
     std::string system_overview;
 
 public:

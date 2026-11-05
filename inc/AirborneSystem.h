@@ -20,4 +20,8 @@ public:
     std::string get_name();
     std::string get_id_prefix();
     std::string get_id_count();
+    CRS* get_crs();
+    SRD* get_srd();
+    SDD* get_sdd();
+
 };

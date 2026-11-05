@@ -25,7 +25,10 @@ protected:
     bool derived;
 
 public:
+    Requirement();
     void fetch();
     void edit();
     void drop();
+    std::string get_rid();
+    std::string get_body();
 };

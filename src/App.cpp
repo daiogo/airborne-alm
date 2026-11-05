@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Requirement.h"
 #include "UI.h"
+#include "CRS.h"
 
 App::App()
 {
@@ -224,18 +225,28 @@ void App::create_requirement()
     switch (selected_document)
     {
     case DOC_CRS:
-        //SRATS srats(rid, body, comments, type, LEVEL_SRATS, safety, derived);
-        //selected_context->crs_doc.srats_list.push_back(srats);
+        selected_context->get_crs()->add_requirement(SRATS(rid, body, comments, type, LEVEL_SRATS, safety, derived));
         break;
     case DOC_SRD:
-        //HLR hlr(rid, body, comments, type, LEVEL_HLR, safety, derived);
-        //selected_context->srd_doc.hlr_list.push_back(hlr);
+        selected_context->get_srd()->add_requirement(HLR(rid, body, comments, type, LEVEL_HLR, safety, derived));
         break;
     case DOC_SDD:
-        //LLR llr(rid, body, comments, type, LEVEL_LLR, safety, derived);
-        //selected_context->sdd_doc.llr_list.push_back(llr);
+        selected_context->get_sdd()->add_requirement(LLR(rid, body, comments, type, LEVEL_LLR, safety, derived));
         break;
     }
+/*
+    if (selected_document == DOC_CRS)
+    {
+        selected_context->get_crs()->add_requirement(SRATS(rid, body, comments, type, LEVEL_SRATS, safety, derived));
+    }
+    else if (selected_document == DOC_SRD)
+    {
+        selected_context->get_srd()->add_requirement(HLR(rid, body, comments, type, LEVEL_HLR, safety, derived));
+    }
+    else if (selected_document == DOC_SDD)
+    {
+        selected_context->get_sdd()->add_requirement(LLR(rid, body, comments, type, LEVEL_LLR, safety, derived));
+    }*/
 }
 
 void App::display_requirement()
@@ -243,6 +254,30 @@ void App::display_requirement()
     system("cls");
     std::cout << "---Display Requirement---" << std::endl;
     // fetch
+
+    selected_context->get_crs()->print_list();
+
+/*
+    std::list<Requirement> *req_list;
+    switch (selected_document)
+    {
+    case DOC_CRS:
+        *req_list = selected_context->sdd_doc.srats_list;
+        break;
+    case DOC_SRD:
+        *req_list = selected_context->sdd_doc.hlr_list;
+        break;
+    case DOC_SDD:
+        *req_list = selected_context->sdd_doc.llr_list;
+        break;
+    }
+
+    for (int i = 0; i < req_list.size(); i++)
+    {
+        std::cout << "ID: " << req_list.at(i).rid << std::endl;
+        std::cout << "Body: " << req_list.at(i).body << std::endl;
+    }*/
+
     /*std::cout << "Requirement " << rid << std::endl;
     std::cout << "Safety: " << safety << std::endl;
     std::cout << "Derived: " << derived << std::endl;

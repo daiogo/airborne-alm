@@ -1,13 +1,11 @@
 #pragma once
 
 #include "Document.h"
-#include <list>
-#include <string>
 #include "HLR.h"
+#include <string>
 
-class SRD : public Document {
+class SRD : public Document<HLR> {
 private:
-    std::list<HLR> hlr_list;
     std::string software_overview;
 
 public:
