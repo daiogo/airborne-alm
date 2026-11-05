@@ -32,7 +32,16 @@ public:
     {
         for (auto& item : requirements) {
             std::cout << "ID: " << item.get_rid() << std::endl;
-            std::cout << "Body: " << item.get_body() << std::endl;
+            std::cout << "Safety: " << item.get_safety() << std::endl;
+            std::cout << "Derived: " << item.get_derived() << std::endl;
+            std::cout << "Type: " << (item.get_type() ? "functional" : "non-functional") << std::endl;
+            std::cout << std::endl;
+            std::cout << "Description" << std::endl;
+            std::cout << item.get_body() << std::endl;
+            std::cout << std::endl;
+            std::cout << "Comments" << std::endl;
+            std::cout << item.get_comments() << std::endl;
+            std::cout << "----------------" << std::endl;
         }
         system("pause");
     }

@@ -31,4 +31,11 @@ public:
     void drop();
     std::string get_rid();
     std::string get_body();
+    std::string get_comments();
+    ReqType get_type();
+    ReqLevel get_level();
+    bool get_safety();
+    bool get_derived();
+
+
 };

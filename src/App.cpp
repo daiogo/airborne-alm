@@ -253,41 +253,20 @@ void App::display_requirement()
 {
     system("cls");
     std::cout << "---Display Requirement---" << std::endl;
-    // fetch
+    // fetch from db
 
-    selected_context->get_crs()->print_list();
-
-/*
-    std::list<Requirement> *req_list;
     switch (selected_document)
     {
     case DOC_CRS:
-        *req_list = selected_context->sdd_doc.srats_list;
+        selected_context->get_crs()->print_list();
         break;
     case DOC_SRD:
-        *req_list = selected_context->sdd_doc.hlr_list;
+        selected_context->get_srd()->print_list();
         break;
     case DOC_SDD:
-        *req_list = selected_context->sdd_doc.llr_list;
+        selected_context->get_sdd()->print_list();
         break;
     }
-
-    for (int i = 0; i < req_list.size(); i++)
-    {
-        std::cout << "ID: " << req_list.at(i).rid << std::endl;
-        std::cout << "Body: " << req_list.at(i).body << std::endl;
-    }*/
-
-    /*std::cout << "Requirement " << rid << std::endl;
-    std::cout << "Safety: " << safety << std::endl;
-    std::cout << "Derived: " << derived << std::endl;
-    std::cout << "Type: " << type ? "functional" : "non-functional" << std::endl;
-    std::cout << std::endl;
-    std::cout << "Description" << std::endl;
-    std::cout << description << std::endl;
-    std::cout << std::endl;
-    std::cout << "Comments" << std::endl;
-    std::cout << comments << std::endl;*/
 }
 
 void App::edit_requirement()
