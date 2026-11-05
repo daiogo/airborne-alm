@@ -115,7 +115,19 @@ UIState App::select_document()
     }
     else
     {
-        selected_document = (DocType)option;
+        switch ((DocType)option)
+        {
+        case DOC_CRS:
+            selected_document = selected_context->get_document_ptr(DOC_CRS);
+            break;
+        case DOC_SRD:
+            selected_document = selected_context->get_document_ptr(DOC_SRD);
+            break;
+        case DOC_SDD:
+            selected_document = selected_context->get_document_ptr(DOC_SDD);
+            break;
+        }
+
         return_state = REQ;
     }
 
@@ -126,28 +138,12 @@ UIState App::select_action()
 {
     int option = 0;
     UIState return_state = REQ;
-    std::string doc_name = "";
 
     // Print header
     system("cls");
     std::cout << "---Select Action---" << std::endl;
     std::cout << "System: " << selected_context->get_name() << std::endl;
-    switch (selected_document)
-    {
-    case DOC_CRS:
-        doc_name = "CRS - Component Requirements Specification";
-        break;
-    case DOC_SRD:
-        doc_name = "SRD - Software Requirements Document";
-        break;
-    case DOC_SDD:
-        doc_name = "SDD - Software Design Description";
-        break;
-    default:
-        doc_name = "Invalid document";
-        break;
-    }
-    std::cout << "Document: " << doc_name << std::endl;
+    std::cout << "Document: " << selected_document->get_title() << std::endl;
 
     // Run dialog
     option = UI::options_dialog("Select a document to work on: ",
@@ -222,6 +218,9 @@ void App::create_requirement()
     option = UI::options_dialog("What type of requirement is it?", {"Functional", "Non-functional"});
     type = (option == 1) ? FUNCTIONAL : NON_FUNCTIONAL;
 
+    selected_document->create_requirement(Requirement(rid, body, comments, type, LEVEL_SRATS, safety, derived));
+
+    /*
     switch (selected_document)
     {
     case DOC_CRS:
@@ -234,6 +233,7 @@ void App::create_requirement()
         selected_context->get_sdd()->add_requirement(LLR(rid, body, comments, type, LEVEL_LLR, safety, derived));
         break;
     }
+    */
 }
 
 void App::display_requirement()
@@ -251,25 +251,16 @@ void App::display_requirement()
 
     // Run dialog
     option = UI::options_dialog("Select an option: ",
-                                {"Search requirement by ID", "Print all requirements", "Exit"});
+                                {"Search requirement by ID",
+                                 "Print all requirements",
+                                 "Exit"});
 
     // Decide action upon input
     if (option == 1)
     {
         id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
-        switch (selected_document)
-        {
-        case DOC_CRS:
-            req_ptr = selected_context->get_crs()->get_requirement(id);
-            break;
-        case DOC_SRD:
-            req_ptr = selected_context->get_srd()->get_requirement(id);
-            break;
-        case DOC_SDD:
-            req_ptr = selected_context->get_sdd()->get_requirement(id);
-            break;
-        }
+        //req_ptr = selected_document->get_requirement(id);
 
         if (req_ptr != nullptr)
         {
@@ -297,18 +288,7 @@ void App::display_requirement()
     }
     else if (option == 2)
     {
-        switch (selected_document)
-        {
-        case DOC_CRS:
-            selected_context->get_crs()->print_requirements_list();
-            break;
-        case DOC_SRD:
-            selected_context->get_srd()->print_requirements_list();
-            break;
-        case DOC_SDD:
-            selected_context->get_sdd()->print_requirements_list();
-            break;
-        }
+        //selected_context->get_crs()->print_requirements_list();
     }
     else
     {
@@ -328,10 +308,17 @@ void App::edit_requirement()
 
 void App::delete_requirement()
 {
+    std::string id;
+
+    // Print header
     system("cls");
     std::cout << "---Delete Requirement---" << std::endl;
-    // find requirement and delete
-    // update db
+
+    id = UI::string_dialog("Type the requirement ID with no spaces: ");
+
+//    selected_document->delete_requirement(id);
+
+    system("pause");
 }
 
 void App::link_requirements()
@@ -346,18 +333,9 @@ void App::link_requirements()
 void App::edit_document()
 {
     system("cls");
-    std::cout << "---Export Document---" << std::endl;
+    std::cout << "---Edit Document---" << std::endl;
 
-    switch (selected_document)
-    {
-    case DOC_CRS:
-        //std::cout << selected_context->srd_doc.hlr_list
-        break;
-    case DOC_SRD:
-        break;
-    case DOC_SDD:
-        break;
-    }
+
 }
 
 void App::export_document()
@@ -365,16 +343,6 @@ void App::export_document()
     system("cls");
     std::cout << "---Export Document---" << std::endl;
 
-    switch (selected_document)
-    {
-    case DOC_CRS:
-        //std::cout << selected_context->srd_doc.hlr_list
-        break;
-    case DOC_SRD:
-        break;
-    case DOC_SDD:
-        break;
-    }
 }
 
 void App::create_system()

@@ -3,6 +3,7 @@
 #include "CRS.h"
 #include "SRD.h"
 #include "SDD.h"
+#include "Document.h"
 #include <string>
 
 class AirborneSystem {
@@ -23,5 +24,6 @@ public:
     CRS* get_crs();
     SRD* get_srd();
     SDD* get_sdd();
+    Document* get_document_ptr(DocType doc);
 
 };

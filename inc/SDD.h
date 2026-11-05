@@ -4,10 +4,15 @@
 #include "LLR.h"
 #include <string>
 
-class SDD : public Document<LLR> {
+class SDD : public Document {
 private:
+    std::list<LLR> llr_list;
     std::string design_overview;
 
 public:
     SDD();
+    bool create_requirement(Requirement req);
+    bool read_requirement(std::string id);
+    bool update_requirement(std::string id);
+    bool delete_requirement(std::string id);
 };

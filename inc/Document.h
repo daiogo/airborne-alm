@@ -1,11 +1,18 @@
 #pragma once
 
+#include "Requirement.h"
 #include <string>
 #include <list>
 #include <iostream>
 #include <cstdlib>
 
-template <typename T>
+typedef enum {
+    DOC_CRS = 1,
+    DOC_SRD = 2,
+    DOC_SDD = 3,
+} DocType;
+
+//template <typename T>
 class Document {
 protected:
     std::string title;
@@ -13,21 +20,47 @@ protected:
     std::string scope;
     std::string referenced_docs;
     //std::string overview;
-    std::list<T> requirements;
+    //std::list<T> requirements;
     std::string acronyms;
     std::string appendix;
 
 public:
+    bool create_requirement(Requirement req);
+    bool read_requirement(std::string id);
+    bool update_requirement(std::string id);
+    bool delete_requirement(std::string id);
+    std::string get_title();
+    void export_document();
 
-    void export_document()
+
+
+/*
+    void add_requirement(const T& req)
     {
+        requirements.push_back(req);
+    }
 
+    bool delete_requirement(std::string id)
+    {
+        bool success = false;
+
+        for (auto it = requirements.begin(); it != requirements.end(); it++)
+        {
+            if (it->rid == id)
+            {
+                requirements.erase(it);
+                success = true;
+                break;
+            }
+        }
+        return success;
     }
 
     std::list<T>* get_requirements_list()
     {
         return &requirements;
     }
+
 
     T* get_requirement(std::string id)
     {
@@ -66,9 +99,6 @@ public:
 
         system("pause");
     }
+    */
 
-    void add_requirement(const T& req)
-    {
-        requirements.push_back(req);
-    }
 };

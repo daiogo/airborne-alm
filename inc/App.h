@@ -10,17 +10,11 @@ typedef enum {
     EXIT = 4,
 } UIState;
 
-typedef enum {
-    DOC_CRS = 1,
-    DOC_SRD = 2,
-    DOC_SDD = 3,
-} DocType;
-
 class App {
 private:
     std::vector<AirborneSystem> system_list;
     AirborneSystem *selected_context;
-    DocType selected_document;
+    Document *selected_document;
     UIState ui_state;
 
 public:

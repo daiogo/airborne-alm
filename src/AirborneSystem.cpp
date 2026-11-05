@@ -1,4 +1,5 @@
 #include "AirborneSystem.h"
+#include "Document.h"
 
 AirborneSystem::AirborneSystem(std::string n, std::string i, char d)
 {
@@ -22,6 +23,26 @@ std::string AirborneSystem::get_id_count()
 {
     id_count++;
     return std::to_string(id_count);
+}
+
+Document* AirborneSystem::get_document_ptr(DocType doc)
+{
+    Document* doc_ptr;
+
+    switch (doc)
+    {
+    case DOC_CRS:
+        doc_ptr = &crs_doc;
+        break;
+    case DOC_SRD:
+        doc_ptr = &srd_doc;
+        break;
+    case DOC_SDD:
+        doc_ptr = &sdd_doc;
+        break;
+    }
+
+    return doc_ptr;
 }
 
 CRS* AirborneSystem::get_crs()

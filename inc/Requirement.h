@@ -26,6 +26,7 @@ protected:
 
 public:
     Requirement();
+    Requirement(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d);
     void fetch();
     void edit();
     void drop();

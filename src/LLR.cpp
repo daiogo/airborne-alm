@@ -1,7 +1,8 @@
 #include "LLR.h"
 
-LLR::LLR(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d)
+LLR::LLR()//(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d)
 {
+    /*
     rid = id;
     body = b;
     comments = c;
@@ -9,6 +10,7 @@ LLR::LLR(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bo
     level = l;
     safety = s;
     derived = d;
+    */
 }
 
 LLR::~LLR()

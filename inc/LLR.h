@@ -11,6 +11,6 @@ private:
     std::list<HLR> linked_hlrs;
 
 public:
-    LLR(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d);
+    LLR();//(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d);
     ~LLR();
 };
