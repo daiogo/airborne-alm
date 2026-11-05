@@ -1,5 +1,5 @@
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 #include "App.h"
 #include "Requirement.h"
 #include "UI.h"
@@ -258,13 +258,13 @@ void App::display_requirement()
     switch (selected_document)
     {
     case DOC_CRS:
-        selected_context->get_crs()->print_list();
+        selected_context->get_crs()->print_requirements_list();
         break;
     case DOC_SRD:
-        selected_context->get_srd()->print_list();
+        selected_context->get_srd()->print_requirements_list();
         break;
     case DOC_SDD:
-        selected_context->get_sdd()->print_list();
+        selected_context->get_sdd()->print_requirements_list();
         break;
     }
 }
