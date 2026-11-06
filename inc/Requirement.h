@@ -6,6 +6,7 @@ typedef enum {
     LEVEL_SRATS = 0,
     LEVEL_HLR = 1,
     LEVEL_LLR = 2,
+    LEVEL_UNDEF = 3,
 } ReqLevel;
 
 typedef enum {

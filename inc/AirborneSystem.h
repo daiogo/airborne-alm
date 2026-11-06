@@ -5,6 +5,7 @@
 #include "SDD.h"
 #include "Document.h"
 #include <string>
+#include <any>
 
 class AirborneSystem {
 private:
@@ -24,6 +25,5 @@ public:
     CRS* get_crs();
     SRD* get_srd();
     SDD* get_sdd();
-    Document* get_document_ptr(DocType doc);
-
+    std::any get_document_ptr(DocType doc);
 };

@@ -15,5 +15,6 @@ private:
 
 public:
     HLR();//(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d);
+    HLR(Requirement req);
     ~HLR();
 };

@@ -13,6 +13,17 @@ HLR::HLR()//(std::string id, std::string b, std::string c, ReqType t, ReqLevel l
     */
 }
 
+HLR::HLR(Requirement req)
+{
+    rid = req.get_rid();
+    body = req.get_body();
+    comments = req.get_comments();
+    type = req.get_type();
+    level = req.get_level();
+    safety = req.get_safety();
+    derived = req.get_derived();
+}
+
 HLR::~HLR()
 {
 

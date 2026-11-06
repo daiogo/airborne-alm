@@ -2,6 +2,9 @@
 
 #include "AirborneSystem.h"
 #include <vector>
+#include <variant>
+
+using DocumentPtr = std::variant<CRS*, SRD*, SDD*>;
 
 typedef enum {
     SYS = 1,
@@ -14,7 +17,7 @@ class App {
 private:
     std::vector<AirborneSystem> system_list;
     AirborneSystem *selected_context;
-    Document *selected_document;
+    DocumentPtr selected_document;
     UIState ui_state;
 
 public:

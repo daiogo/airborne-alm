@@ -25,9 +25,9 @@ std::string AirborneSystem::get_id_count()
     return std::to_string(id_count);
 }
 
-Document* AirborneSystem::get_document_ptr(DocType doc)
+std::any AirborneSystem::get_document_ptr(DocType doc)
 {
-    Document* doc_ptr;
+    std::any doc_ptr;
 
     switch (doc)
     {
