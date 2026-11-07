@@ -38,6 +38,10 @@ public:
     ReqLevel get_level();
     bool get_safety();
     bool get_derived();
-
-
+    void set_body(std::string b);
+    void set_comments(std::string c);
+    void set_type(ReqType t);
+    void set_level(ReqLevel l);
+    void set_safety(bool s);
+    void set_derived(bool d);
 };

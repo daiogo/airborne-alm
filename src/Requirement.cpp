@@ -65,3 +65,33 @@ bool Requirement::get_derived()
 {
     return derived;
 }
+
+void Requirement::set_body(std::string b)
+{
+    body = b;
+}
+
+void Requirement::set_comments(std::string c)
+{
+    comments = c;
+}
+
+void Requirement::set_type(ReqType t)
+{
+    type = t;
+}
+
+void Requirement::set_level(ReqLevel l)
+{
+    level = l;
+}
+
+void Requirement::set_safety(bool s)
+{
+    safety = s;
+}
+
+void Requirement::set_derived(bool d)
+{
+    derived = d;
+}

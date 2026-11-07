@@ -17,6 +17,12 @@ App::App()
     AirborneSystem as2("Motor", "FADEC", 'A');
     system_list.push_back(as1);
     system_list.push_back(as2);
+
+    /*
+    as2.get_sdd()->create_requirement(Requirement("FADEC-1","test1","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
+    as2.get_sdd()->create_requirement(Requirement("FADEC-2","test2","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
+    as2.get_sdd()->create_requirement(Requirement("FADEC-3","test3","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
+    */
 }
 
 void App::load_database()
@@ -269,52 +275,73 @@ void App::display_requirement()
 
         if (req_ptr != nullptr)
         {
-            std::cout << "ID: " << req_ptr->get_rid() << std::endl;
-            std::cout << "Safety: " << req_ptr->get_safety() << std::endl;
-            std::cout << "Derived: " << req_ptr->get_derived() << std::endl;
-            std::cout << "Type: " << (req_ptr->get_type() ? "functional" : "non-functional") << std::endl;
-            std::cout << std::endl;
-            std::cout << "Description: " << std::endl;
-            std::cout << req_ptr->get_body() << std::endl;
-            std::cout << std::endl;
-            std::cout << "Comments: " << std::endl;
-            std::cout << req_ptr->get_comments() << std::endl;
-            std::cout << std::endl;
-            std::cout << "Linked requirements: " << std::endl;
-            std::cout << "TBD" << std::endl;
+            print_requirement(req_ptr);
         }
         else
         {
             std::cout << "No requirements with this ID were found in this document." << std::endl;
         }
 
-        system("pause");
-
     }
     else if (option == 2)
     {
         //selected_context->get_crs()->print_requirements_list();
-        //selected_document->get
+        std::visit([=](const auto& doc) { return doc->print_requirements_list(); }, selected_document);
     }
     else
     {
         // Do nothing and exit
     }
+
+    system("pause");
 }
 
 void App::edit_requirement()
 {
+    std::string id;
+    Requirement *req_ptr;
+
+    // Print header
     system("cls");
     std::cout << "---Edit Requirement---" << std::endl;
     // search requirement
     // ask what needs to be edited
     // edit the selected field
     // update db
+
+    id = UI::string_dialog("Type the requirement ID with no spaces: ");
+
+    req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
+
+    if (req_ptr != nullptr)
+    {
+        system("cls");
+        std::cout << "Your current requirement: " << std::endl;
+        print_requirement(req_ptr);
+
+        std::cout << std::endl << "-------------------" << std::endl << std::endl;
+
+        present_edit_options(req_ptr);
+
+        std::cout << std::endl << "-------------------" << std::endl << std::endl;
+
+        std::cout << "Your new requirement: " << std::endl;
+        print_requirement(req_ptr);
+    }
+    else
+    {
+        std::cout << "No requirements with this ID were found in this document." << std::endl;
+    }
+
+    system("pause");
 }
 
 void App::delete_requirement()
 {
     std::string id;
+    int option = 0;
+    Requirement *req_ptr;
+    bool success = false;
 
     // Print header
     system("cls");
@@ -322,7 +349,18 @@ void App::delete_requirement()
 
     id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
-//    selected_document->delete_requirement(id);
+    req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
+
+    std::cout << "Found!" << std::endl << std::endl;
+    print_requirement(req_ptr);
+
+    option = UI::options_dialog("Do you really wish to delete this requirement?", {"Yes", "No"});
+
+    if (option == 1)
+    {
+        success = std::visit([=](const auto& doc) -> bool { return doc->delete_requirement(id); }, selected_document);
+        std::cout << (success ? "Requirement deleted sucessfully" : "Removal failed") << std::endl << std::endl;
+    }
 
     system("pause");
 }
@@ -375,5 +413,82 @@ void App::create_system()
     //as = new AirborneSystem(name, id_prefix, dal);
     AirborneSystem as(name, id_prefix, dal);
     system_list.push_back(as);
+}
+
+void App::present_edit_options(Requirement *req_ptr)
+{
+    bool done = false;
+    int option = 0;
+    std::string body;
+    std::string comments;
+    ReqType type;
+    bool safety;
+    bool derived;
+
+    while(!done)
+    {
+
+        option = UI::options_dialog("What field do you wish to edit?",
+                                    {"Body",
+                                     "Comments",
+                                     "Type",
+                                     "Safety",
+                                     "Derived",
+                                     "Exit"});
+
+        // Decide action upon input
+        switch (option)
+        {
+        case 1:
+            body = UI::string_dialog("New body: ");
+            req_ptr->set_body(body);
+            break;
+        case 2:
+            comments = UI::string_dialog("New comments: ");
+            req_ptr->set_comments(comments);
+            break;
+        case 3:
+            option = UI::options_dialog("New requirement type: ", {"Functional", "Non-functional"});
+            type = (option == 1) ? FUNCTIONAL : NON_FUNCTIONAL;
+            req_ptr->set_type(type);
+            break;
+        case 4:
+            option = UI::options_dialog("New safety flag: ", {"True", "False"});
+            safety = (option == 1) ? true : false;
+            req_ptr->set_safety(safety);
+            break;
+        case 5:
+            option = UI::options_dialog("New derived flag: ", {"True", "False"});
+            derived = (option == 1) ? true : false;
+            req_ptr->set_derived(derived);
+            break;
+        case 6:
+            done = true;
+            break;
+        default:
+            std::cout << "Invalid option. Try again." << std::endl;
+            break;
+        }
+    }
+
+    std::cout << std::endl;
+}
+
+void App::print_requirement(Requirement *req_ptr)
+{
+    std::cout << "ID: " << req_ptr->get_rid() << std::endl;
+    std::cout << "Safety: " << (req_ptr->get_safety() ? "True" : "False") << std::endl;
+    std::cout << "Derived: " << (req_ptr->get_derived() ? "True" : "False") << std::endl;
+    std::cout << "Type: " << (req_ptr->get_type() ? "Functional" : "Non-functional") << std::endl;
+    std::cout << std::endl;
+    std::cout << "Body: " << std::endl;
+    std::cout << req_ptr->get_body() << std::endl;
+    std::cout << std::endl;
+    std::cout << "Comments: " << std::endl;
+    std::cout << req_ptr->get_comments() << std::endl;
+    std::cout << std::endl;
+    std::cout << "Linked requirements: " << std::endl;
+    std::cout << "TBD" << std::endl;
+    std::cout << std::endl;
 }
 

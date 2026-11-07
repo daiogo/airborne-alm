@@ -4,7 +4,6 @@
 #include <string>
 #include <list>
 #include <iostream>
-#include <cstdlib>
 
 typedef enum {
     DOC_CRS = 1,
@@ -37,8 +36,6 @@ public:
     void create_requirement(Requirement req)
     {
         requirements.push_back(T(req));
-
-        std::cout << "TBD" << std::endl;
     }
 
     Requirement* read_requirement(std::string id)
@@ -57,14 +54,43 @@ public:
         return req_ptr;
     }
 
-    bool update_requirement(std::string id)
+    bool update_requirement(Requirement req)
     {
+        bool success = false;
 
+        for (auto& item : requirements)
+        {
+            if (item.get_rid() == req.get_rid())
+            {
+                item.set_body();
+                item.set_comments();
+                item.set_type();
+                item.set_level();
+                item.set_safety();
+                item.set_derived();
+                success = true;
+                break;
+            }
+        }
+
+        return success;
     }
 
     bool delete_requirement(std::string id)
     {
+        bool success = false;
 
+        for (auto it = requirements.begin(); it != requirements.end(); it++)
+        {
+            if (it->get_rid() == id)
+            {
+                requirements.erase(it);
+                success = true;
+                break;
+            }
+        }
+
+        return success;
     }
 
     std::string get_title()
@@ -76,6 +102,34 @@ public:
     void export_document()
     {
 
+    }
+
+    void print_requirements_list()
+    {
+        if (requirements.size() > 0)
+        {
+            for (auto& item : requirements)
+            {
+                std::cout << "ID: " << item.get_rid() << std::endl;
+                std::cout << "Safety: " << (item.get_safety() ? "True" : "False") << std::endl;
+                std::cout << "Derived: " << (item.get_derived() ? "True" : "False") << std::endl;
+                std::cout << "Type: " << (item.get_type() ? "Functional" : "Non-functional") << std::endl;
+                std::cout << std::endl;
+                std::cout << "Description: " << std::endl;
+                std::cout << item.get_body() << std::endl;
+                std::cout << std::endl;
+                std::cout << "Comments: " << std::endl;
+                std::cout << item.get_comments() << std::endl;
+                std::cout << std::endl;
+                std::cout << "Linked requirements: " << std::endl;
+                //std::cout << "Linked requirements here" << std::endl;
+                std::cout << "----------------" << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "This document currently has no requirements" << std::endl;
+        }
     }
 
 
@@ -121,29 +175,8 @@ public:
 
         return req_ptr;
     }
-
-    void print_requirements_list()
-    {
-        for (auto& item : requirements)
-        {
-            std::cout << "ID: " << item.get_rid() << std::endl;
-            std::cout << "Safety: " << item.get_safety() << std::endl;
-            std::cout << "Derived: " << item.get_derived() << std::endl;
-            std::cout << "Type: " << (item.get_type() ? "functional" : "non-functional") << std::endl;
-            std::cout << std::endl;
-            std::cout << "Description: " << std::endl;
-            std::cout << item.get_body() << std::endl;
-            std::cout << std::endl;
-            std::cout << "Comments: " << std::endl;
-            std::cout << item.get_comments() << std::endl;
-            std::cout << std::endl;
-            std::cout << "Linked requirements: " << std::endl;
-            //std::cout << "Linked requirements here" << std::endl;
-            std::cout << "----------------" << std::endl;
-        }
-
-        system("pause");
-    }
-    */
+*/
 
 };
+
+
