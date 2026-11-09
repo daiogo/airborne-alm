@@ -3,10 +3,10 @@
 CRS::CRS()
 {
     title = "CRS - Component System Requirements";
-    system_overview = "This is the SDD design overview";
+    system_overview = "This is the CRS design overview";
 }
 
-std::string export_document()
+std::string CRS::export_document()
 {
     std::string doc;
 

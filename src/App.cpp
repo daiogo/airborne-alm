@@ -378,6 +378,9 @@ void App::export_document()
     system("cls");
     std::cout << "---Export Document---" << std::endl;
 
+    std::cout << selected_document->export_document() << std::endl;
+
+    system("pause");
 }
 
 void App::create_system()

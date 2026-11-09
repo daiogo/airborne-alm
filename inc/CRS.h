@@ -1,16 +1,18 @@
 #pragma once
 
 #include "Document.h"
+#include "RequirementsList.h"
 #include "SRATS.h"
 #include <string>
 
-class CRS : public Document<SRATS> {
+class CRS : public Document, public RequirementsList<SRATS> {
 private:
     //std::list<SRATS> srats_list;
     std::string system_overview;
 
 public:
     CRS();
+    std::string export_document();
     /*
     bool create_requirement(Requirement req);
     Requirement* read_requirement(std::string id);

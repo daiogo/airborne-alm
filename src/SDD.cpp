@@ -3,10 +3,10 @@
 SDD::SDD()
 {
     title = "SDD - Software Design Description";
-    design_overview = "This is the SRD software overview";
+    design_overview = "This is the SDD software overview";
 }
 
-std::string export_document()
+std::string SDD::export_document()
 {
     std::string doc;
 

@@ -1,6 +1,10 @@
 #include "Document.h"
 
-/*
+std::string Document::export_document()
+{
+
+}
+
 bool Document::create_requirement(Requirement req)
 {
 
@@ -30,9 +34,3 @@ std::string Document::get_title()
 {
     return title;
 }
-
-void Document::export_document()
-{
-
-}
-*/

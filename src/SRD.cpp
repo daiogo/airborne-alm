@@ -6,7 +6,7 @@ SRD::SRD()
     software_overview = "This is the SRD software overview";
 }
 
-std::string export_document()
+std::string SRD::export_document()
 {
     std::string doc;
 
