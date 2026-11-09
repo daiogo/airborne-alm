@@ -11,7 +11,7 @@ typedef enum {
     DOC_SDD = 3,
 } DocType;
 
-template <typename T>
+//template <typename T>
 class Document {
 protected:
     std::string title;
@@ -19,20 +19,20 @@ protected:
     std::string scope;
     std::string referenced_docs;
     //std::string overview;
-    std::list<T> requirements;
+    //std::list<T> requirements;
     std::string acronyms;
     std::string appendix;
 
 public:
-    /*
-    bool create_requirement(Requirement req);
-    Requirement* read_requirement(std::string id);
-    bool update_requirement(std::string id);
-    bool delete_requirement(std::string id);
+    virtual bool create_requirement(Requirement req);
+    virtual Requirement* read_requirement(std::string id);
+    virtual bool update_requirement(std::string id);
+    virtual bool delete_requirement(std::string id);
+    virtual void print_requirements_list();
     std::string get_title();
     void export_document();
-    */
 
+/*
     void create_requirement(Requirement req)
     {
         requirements.push_back(T(req));

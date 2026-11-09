@@ -5,7 +5,7 @@
 #include <vector>
 #include <variant>
 
-using DocumentPtr = std::variant<CRS*, SRD*, SDD*>;
+//using DocumentPtr = std::variant<CRS*, SRD*, SDD*>;
 
 typedef enum {
     SYS = 1,
@@ -18,7 +18,7 @@ class App {
 private:
     std::vector<AirborneSystem> system_list;
     AirborneSystem *selected_context;
-    DocumentPtr selected_document;
+    Document *selected_document;
     UIState ui_state;
     //DAO dao;
 

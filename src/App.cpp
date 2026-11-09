@@ -129,10 +129,10 @@ UIState App::select_document()
             selected_document = selected_context->get_crs();
             break;
         case DOC_SRD:
-            selected_document = selected_context->get_srd();//std::any_cast<SRD*>(selected_context->get_document_ptr(DOC_SRD));
+            selected_document = selected_context->get_srd();
             break;
         case DOC_SDD:
-            selected_document = selected_context->get_sdd();//std::any_cast<SDD*>(selected_context->get_document_ptr(DOC_SDD));
+            selected_document = selected_context->get_sdd();
             break;
         }
 
@@ -151,8 +151,9 @@ UIState App::select_action()
     system("cls");
     std::cout << "---Select Action---" << std::endl;
     std::cout << "System: " << selected_context->get_name() << std::endl;
-    std::string title = std::visit([](const auto& doc) -> std::string { return doc->get_title(); }, selected_document);
-    std::cout << "Document: " << title << std::endl;
+    //std::string title = std::visit([](const auto& doc) -> std::string { return doc->get_title(); }, selected_document);
+    //std::cout << "Document: " << title << std::endl;
+    std::cout << "Document: " << selected_document->get_title() << std::endl;
 
     // Run dialog
     option = UI::options_dialog("Select a document to work on: ",
@@ -227,25 +228,10 @@ void App::create_requirement()
     option = UI::options_dialog("What type of requirement is it?", {"Functional", "Non-functional"});
     type = (option == 1) ? FUNCTIONAL : NON_FUNCTIONAL;
 
-    //selected_document->create_requirement(Requirement(rid, body, comments, type, LEVEL_UNDEF, safety, derived));
-    std::visit([=](const auto& doc) { return doc->create_requirement(Requirement(rid, body, comments, type, LEVEL_UNDEF, safety, derived)); }, selected_document);
+    selected_document->create_requirement(Requirement(rid, body, comments, type, LEVEL_UNDEF, safety, derived));
+    //std::visit([=](const auto& doc) { return doc->create_requirement(Requirement(rid, body, comments, type, LEVEL_UNDEF, safety, derived)); }, selected_document);
 
     system("pause");
-
-    /*
-    switch (selected_document)
-    {
-    case DOC_CRS:
-        selected_context->get_crs()->add_requirement(SRATS(rid, body, comments, type, LEVEL_SRATS, safety, derived));
-        break;
-    case DOC_SRD:
-        selected_context->get_srd()->add_requirement(HLR(rid, body, comments, type, LEVEL_HLR, safety, derived));
-        break;
-    case DOC_SDD:
-        selected_context->get_sdd()->add_requirement(LLR(rid, body, comments, type, LEVEL_LLR, safety, derived));
-        break;
-    }
-    */
 }
 
 void App::display_requirement()
@@ -272,8 +258,8 @@ void App::display_requirement()
     {
         id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
-        //req_ptr = selected_document->read_requirement(id);
-        req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
+        req_ptr = selected_document->read_requirement(id);
+        //req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
 
         if (req_ptr != nullptr)
         {
@@ -287,8 +273,8 @@ void App::display_requirement()
     }
     else if (option == 2)
     {
-        //selected_context->get_crs()->print_requirements_list();
-        std::visit([=](const auto& doc) { return doc->print_requirements_list(); }, selected_document);
+        selected_document->print_requirements_list();
+        //std::visit([=](const auto& doc) { return doc->print_requirements_list(); }, selected_document);
     }
     else
     {
@@ -313,7 +299,8 @@ void App::edit_requirement()
 
     id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
-    req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
+    //req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
+    req_ptr = selected_document->read_requirement(id);
 
     if (req_ptr != nullptr)
     {
@@ -351,7 +338,8 @@ void App::delete_requirement()
 
     id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
-    req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
+    req_ptr = selected_document->read_requirement(id);
+    //req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
 
     std::cout << "Found!" << std::endl << std::endl;
     print_requirement(req_ptr);
@@ -360,7 +348,8 @@ void App::delete_requirement()
 
     if (option == 1)
     {
-        success = std::visit([=](const auto& doc) -> bool { return doc->delete_requirement(id); }, selected_document);
+        //success = std::visit([=](const auto& doc) -> bool { return doc->delete_requirement(id); }, selected_document);
+        success = selected_document->delete_requirement(id);
         std::cout << (success ? "Requirement deleted sucessfully" : "Removal failed") << std::endl << std::endl;
     }
 
