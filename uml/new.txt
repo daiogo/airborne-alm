@@ -1,0 +1,153 @@
+@startuml
+
+' RELATIONSHIPS
+
+'App *-- DAO
+App *-- AirborneSystem 
+
+AirborneSystem *-- CRS
+AirborneSystem *-- SRD
+AirborneSystem *-- SDD
+
+Document <|-- CRS
+Document <|-- SRD
+Document <|-- SDD
+
+CRS o-- SRATS
+SRD o-- HLR
+SDD o-- LLR
+
+Requirement <|-- SRATS
+Requirement <|-- HLR
+Requirement <|-- LLR
+
+SRATS <-- HLR
+HLR <-- LLR
+HLR --> LLR
+
+
+' Force CRS, SRD and SDD to the same visual level
+CRS -[hidden]right- SRD
+SRD -[hidden]right- SDD
+
+' CLASS DECLARATIONS
+
+class DAO {
+-filepath: string
+-file: fstream
++init(): bool
++save(): bool
++load(): bool
+}
+
+class App {
+-system_list: AirborneSystem list
+-selected_context: AirborneSystem*
+-selected_document: variant<CRS*, SRD*, SDD*>
+-ui_state: UIState enum
+-dao: DAO
++App()
++load_database(): void
++save_database(): void
++run(): void
++select_system(): UIState
++select_document(): UIState
++select_action(): UIState
++create_requirement(): void
++display_requirement(): void
++edit_requirement(): void
++delete_requirement(): void
++link_requirements(): void
++edit_document(): void
++export_document(): void
++create_system(): void
++present_edit_options(Requirement *req_ptr): void
++print_requirement(Requirement *req_ptr): void
+}
+
+class UI <abstract>{
++options_dialog(): int
++string_dialog(): string
+}
+
+class AirborneSystem {
+-name: string
+-id_prefix: string
+-crs_doc: CRS
+-srd_doc: SRD
+-sdd_doc: SDD
+-dal: char
++AirborneSystem(string n, string i, char d):
++get_name(): string
++get_id_prefix(): string
++get_id_count(): string
++get_crs(): CRS&
++get_srd(): SRD&
++get_sdd(): SDD&
+//+get_document_ptr(DocType doc):
+}
+
+class Requirement {
+-rid: string
+-title: string
+-description: string
+-version: int
+-type: enum
+-level: enum
+-safety: enum
+-derived: bool
+-comments: string
++Requirement()
++Requirement(id, body, ...)
+}
+
+class Document <template>{
+-title: string
+-purpose: string
+-scope: string
+-referenced_docs: string
+-requirements: <T> list
+-acronyms: string
+-appendix: string
++create_requirement(Requirement req): void
++read_requirement(string id): Requirement*
++update_requirement(Requirement req): bool
++delete_requirement(string id):
++export_document(): void
+}
+
+class CRS {
+-system_overview: string
++CRS()
+}
+
+class SRD {
+-software_overview: string
++SRD()
+}
+
+class SDD {
+-design_overview: string
++SDD()
+}
+
+class SRATS {
+-linked_hlrs: HLR list
++SRATS()
++~SRATS()
+}
+
+class HLR {
+-linked_srats: SRATS list
+-linked_llrs: LLR list
++HLR()
++~HLR()
+}
+
+class LLR {
+-linked_hlrs: HLR list
++LLR()
++~LLR()
+}
+
+@enduml

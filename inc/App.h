@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AirborneSystem.h"
+#include "DAO.h"
 #include <vector>
 #include <variant>
 
@@ -19,10 +20,12 @@ private:
     AirborneSystem *selected_context;
     DocumentPtr selected_document;
     UIState ui_state;
+    //DAO dao;
 
 public:
     App();
     void load_database();
+    void save_database();
     void run();
     UIState select_system();
     UIState select_document();

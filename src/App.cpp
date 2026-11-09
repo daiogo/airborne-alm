@@ -10,7 +10,9 @@ App::App()
     // Start selecting document context
     ui_state = SYS;
 
-    //load_database();
+    // Init and load database
+    //dao.init();
+    //dao.load();
 
     //temp
     AirborneSystem as1("Landing Gear", "LG", 'B');
