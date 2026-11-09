@@ -34,28 +34,6 @@ public:
         return req_ptr;
     }
 
-    bool update_requirement(Requirement req)
-    {
-        bool success = false;
-
-        for (auto& item : requirements)
-        {
-            if (item.get_rid() == req.get_rid())
-            {
-                item.set_body();
-                item.set_comments();
-                item.set_type();
-                item.set_level();
-                item.set_safety();
-                item.set_derived();
-                success = true;
-                break;
-            }
-        }
-
-        return success;
-    }
-
     bool delete_requirement(std::string id)
     {
         bool success = false;
@@ -75,8 +53,6 @@ public:
 
     void print_requirements_list()
     {
-        std::cout << "Entrou na funcao certa" << std::endl;
-
         if (requirements.size() > 0)
         {
             for (auto& item : requirements)

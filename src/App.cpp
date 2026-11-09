@@ -151,8 +151,6 @@ UIState App::select_action()
     system("cls");
     std::cout << "---Select Action---" << std::endl;
     std::cout << "System: " << selected_context->get_name() << std::endl;
-    //std::string title = std::visit([](const auto& doc) -> std::string { return doc->get_title(); }, selected_document);
-    //std::cout << "Document: " << title << std::endl;
     std::cout << "Document: " << selected_document->get_title() << std::endl;
 
     // Run dialog
@@ -229,7 +227,6 @@ void App::create_requirement()
     type = (option == 1) ? FUNCTIONAL : NON_FUNCTIONAL;
 
     selected_document->create_requirement(Requirement(rid, body, comments, type, LEVEL_UNDEF, safety, derived));
-    //std::visit([=](const auto& doc) { return doc->create_requirement(Requirement(rid, body, comments, type, LEVEL_UNDEF, safety, derived)); }, selected_document);
 
     system("pause");
 }
@@ -259,7 +256,6 @@ void App::display_requirement()
         id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
         req_ptr = selected_document->read_requirement(id);
-        //req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
 
         if (req_ptr != nullptr)
         {
@@ -274,7 +270,6 @@ void App::display_requirement()
     else if (option == 2)
     {
         selected_document->print_requirements_list();
-        //std::visit([=](const auto& doc) { return doc->print_requirements_list(); }, selected_document);
     }
     else
     {
@@ -299,7 +294,6 @@ void App::edit_requirement()
 
     id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
-    //req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
     req_ptr = selected_document->read_requirement(id);
 
     if (req_ptr != nullptr)
@@ -339,18 +333,22 @@ void App::delete_requirement()
     id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
     req_ptr = selected_document->read_requirement(id);
-    //req_ptr = std::visit([=](const auto& doc) -> Requirement* { return doc->read_requirement(id); }, selected_document);
 
-    std::cout << "Found!" << std::endl << std::endl;
-    print_requirement(req_ptr);
-
-    option = UI::options_dialog("Do you really wish to delete this requirement?", {"Yes", "No"});
-
-    if (option == 1)
+    if (req_ptr != nullptr)
     {
-        //success = std::visit([=](const auto& doc) -> bool { return doc->delete_requirement(id); }, selected_document);
-        success = selected_document->delete_requirement(id);
-        std::cout << (success ? "Requirement deleted sucessfully" : "Removal failed") << std::endl << std::endl;
+        print_requirement(req_ptr);
+
+        option = UI::options_dialog("Do you really wish to delete this requirement?", {"Yes", "No"});
+
+        if (option == 1)
+        {
+            success = selected_document->delete_requirement(id);
+            std::cout << (success ? "Requirement deleted sucessfully" : "Removal failed") << std::endl << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "No requirements with this ID were found in this document." << std::endl;
     }
 
     system("pause");
