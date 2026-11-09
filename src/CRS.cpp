@@ -3,8 +3,23 @@
 CRS::CRS()
 {
     title = "CRS - Component System Requirements";
+    system_overview = "This is the SDD design overview";
 }
 
+std::string export_document()
+{
+    std::string doc;
+
+    doc = title +
+          "\n\n" +
+          system_overview +
+          "\n\n";// +
+          //requirements
+
+    return doc;
+}
+
+/*
 bool CRS::create_requirement(Requirement req)
 {
     srats_list.push_back(SRATS(req));
@@ -68,4 +83,4 @@ void CRS::print_requirements_list()
         std::cout << "This document currently has no requirements" << std::endl;
     }
 }
-
+*/

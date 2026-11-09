@@ -3,8 +3,22 @@
 SDD::SDD()
 {
     title = "SDD - Software Design Description";
+    design_overview = "This is the SRD software overview";
 }
 
+std::string export_document()
+{
+    std::string doc;
+
+    doc = title +
+          "\n\n" +
+          design_overview +
+          "\n\n";// +
+          //requirements
+
+    return doc;
+}
+/*
 bool SDD::create_requirement(Requirement req)
 {
     llr_list.push_back(LLR(req));
@@ -68,3 +82,4 @@ void SDD::print_requirements_list()
         std::cout << "This document currently has no requirements" << std::endl;
     }
 }
+*/

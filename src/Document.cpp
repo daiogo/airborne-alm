@@ -1,6 +1,6 @@
 #include "Document.h"
 
-
+/*
 bool Document::create_requirement(Requirement req)
 {
 
@@ -35,3 +35,4 @@ void Document::export_document()
 {
 
 }
+*/

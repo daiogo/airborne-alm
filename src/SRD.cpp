@@ -3,8 +3,22 @@
 SRD::SRD()
 {
     title = "SRD - Software Requirements Description";
+    software_overview = "This is the SRD software overview";
 }
 
+std::string export_document()
+{
+    std::string doc;
+
+    doc = title +
+          "\n\n" +
+          software_overview +
+          "\n\n";// +
+          //requirements
+
+    return doc;
+}
+/*
 bool SRD::create_requirement(Requirement req)
 {
     hlr_list.push_back(HLR(req));
@@ -68,3 +82,4 @@ void SRD::print_requirements_list()
         std::cout << "This document currently has no requirements" << std::endl;
     }
 }
+*/

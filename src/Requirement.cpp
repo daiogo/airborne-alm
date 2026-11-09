@@ -16,21 +16,6 @@ Requirement::Requirement(std::string id, std::string b, std::string c, ReqType t
     derived = d;
 }
 
-void Requirement::fetch()
-{
-
-}
-
-void Requirement::edit()
-{
-
-}
-
-void Requirement::drop()
-{
-
-}
-
 std::string Requirement::get_rid()
 {
     return rid;
