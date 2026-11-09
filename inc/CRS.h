@@ -5,7 +5,7 @@
 #include "SRATS.h"
 #include <string>
 
-class CRS : public Document, public RequirementsList<SRATS> {
+class CRS : public RequirementsList<SRATS> {
 private:
     //std::list<SRATS> srats_list;
     std::string system_overview;

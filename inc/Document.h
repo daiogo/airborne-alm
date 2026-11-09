@@ -23,11 +23,11 @@ protected:
 public:
     std::string get_title();
     virtual std::string export_document();
-    virtual bool create_requirement(Requirement req);
+    virtual void create_requirement(Requirement req);
     virtual Requirement* read_requirement(std::string id);
     virtual bool update_requirement(std::string id);
     virtual bool delete_requirement(std::string id);
-    virtual void print_requirements_list();
+    virtual void print_requirements_list() = 0;
 };
 
 

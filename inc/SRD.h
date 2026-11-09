@@ -5,7 +5,7 @@
 #include "HLR.h"
 #include <string>
 
-class SRD : public Document, public RequirementsList<HLR> {
+class SRD : public RequirementsList<HLR> {
 private:
     //std::list<HLR> hlr_list;
     std::string software_overview;

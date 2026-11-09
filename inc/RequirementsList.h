@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Requirement.h"
+#include "Document.h"
 #include <string>
 #include <list>
 #include <iostream>
 
 template <typename T>
-class RequirementsList {
+class RequirementsList : public Document {
 protected:
     std::list<T> requirements;
 
@@ -74,6 +75,8 @@ public:
 
     void print_requirements_list()
     {
+        std::cout << "Entrou na funcao certa" << std::endl;
+
         if (requirements.size() > 0)
         {
             for (auto& item : requirements)

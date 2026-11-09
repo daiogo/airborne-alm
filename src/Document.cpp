@@ -1,11 +1,17 @@
 #include "Document.h"
+#include <iostream>
+
+std::string Document::get_title()
+{
+    return title;
+}
 
 std::string Document::export_document()
 {
 
 }
 
-bool Document::create_requirement(Requirement req)
+void Document::create_requirement(Requirement req)
 {
 
 }
@@ -24,13 +30,9 @@ bool Document::delete_requirement(std::string id)
 {
 
 }
-
+/*
 void Document::print_requirements_list()
 {
-
+    std::cout << "Entrou na funcao errada no Document" << std::endl;
 }
-
-std::string Document::get_title()
-{
-    return title;
-}
+*/

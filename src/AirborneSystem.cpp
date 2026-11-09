@@ -25,26 +25,6 @@ std::string AirborneSystem::get_id_count()
     return std::to_string(id_count);
 }
 
-std::any AirborneSystem::get_document_ptr(DocType doc)
-{
-    std::any doc_ptr;
-
-    switch (doc)
-    {
-    case DOC_CRS:
-        doc_ptr = &crs_doc;
-        break;
-    case DOC_SRD:
-        doc_ptr = &srd_doc;
-        break;
-    case DOC_SDD:
-        doc_ptr = &sdd_doc;
-        break;
-    }
-
-    return doc_ptr;
-}
-
 CRS* AirborneSystem::get_crs()
 {
     return &crs_doc;

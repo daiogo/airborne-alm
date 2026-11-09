@@ -5,7 +5,7 @@
 #include "LLR.h"
 #include <string>
 
-class SDD : public Document, public RequirementsList<LLR> {
+class SDD : public RequirementsList<LLR> {
 private:
     //std::list<LLR> llr_list;
     std::string design_overview;
