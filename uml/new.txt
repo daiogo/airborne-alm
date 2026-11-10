@@ -2,16 +2,18 @@
 
 ' RELATIONSHIPS
 
-'App *-- DAO
+App *-- DAO
 App *-- AirborneSystem 
 
 AirborneSystem *-- CRS
 AirborneSystem *-- SRD
 AirborneSystem *-- SDD
 
-Document <|-- CRS
-Document <|-- SRD
-Document <|-- SDD
+Document <|-- ReqDocument
+
+ReqDocument <|-- CRS
+ReqDocument <|-- SRD
+ReqDocument <|-- SDD
 
 CRS o-- SRATS
 SRD o-- HLR
@@ -43,7 +45,7 @@ class DAO {
 class App {
 -system_list: AirborneSystem list
 -selected_context: AirborneSystem*
--selected_document: variant<CRS*, SRD*, SDD*>
+-selected_document: Document*
 -ui_state: UIState enum
 -dao: DAO
 +App()
@@ -65,7 +67,7 @@ class App {
 +print_requirement(Requirement *req_ptr): void
 }
 
-class UI <abstract>{
+class UI <namespace>{
 +options_dialog(): int
 +string_dialog(): string
 }
@@ -84,7 +86,6 @@ class AirborneSystem {
 +get_crs(): CRS&
 +get_srd(): SRD&
 +get_sdd(): SDD&
-//+get_document_ptr(DocType doc):
 }
 
 class Requirement {
@@ -101,19 +102,21 @@ class Requirement {
 +Requirement(id, body, ...)
 }
 
-class Document <template>{
+class Document {
 -title: string
 -purpose: string
 -scope: string
 -referenced_docs: string
--requirements: <T> list
 -acronyms: string
 -appendix: string
-+create_requirement(Requirement req): void
-+read_requirement(string id): Requirement*
-+update_requirement(Requirement req): bool
-+delete_requirement(string id):
 +export_document(): void
+}
+
+class ReqDocument <template>{
+-requirements: list of <T>
++add_requirement(Requirement req): void
++get_requirement_ptr(string id): Requirement*
++delete_requirement(string id): bool
 }
 
 class CRS {
