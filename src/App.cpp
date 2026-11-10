@@ -3,7 +3,6 @@
 #include "App.h"
 #include "Requirement.h"
 #include "UI.h"
-#include "CRS.h"
 
 App::App()
 {
