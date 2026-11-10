@@ -3,9 +3,6 @@
 #include "AirborneSystem.h"
 #include "DAO.h"
 #include <vector>
-#include <variant>
-
-//using DocumentPtr = std::variant<CRS*, SRD*, SDD*>;
 
 typedef enum {
     SYS = 1,
@@ -31,8 +28,8 @@ public:
     UIState select_document();
     UIState select_action();
     void create_requirement();
-    void display_requirement();
-    void edit_requirement();
+    void read_requirement();
+    void update_requirement();
     void delete_requirement();
     void link_requirements();
     void edit_document();

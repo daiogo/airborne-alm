@@ -21,9 +21,9 @@ App::App()
     system_list.push_back(as2);
 
     /*
-    as2.get_sdd()->create_requirement(Requirement("FADEC-1","test1","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
-    as2.get_sdd()->create_requirement(Requirement("FADEC-2","test2","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
-    as2.get_sdd()->create_requirement(Requirement("FADEC-3","test3","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
+    as2.get_sdd()->add_requirement(Requirement("FADEC-1","test1","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
+    as2.get_sdd()->add_requirement(Requirement("FADEC-2","test2","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
+    as2.get_sdd()->add_requirement(Requirement("FADEC-3","test3","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
     */
 }
 
@@ -171,10 +171,10 @@ UIState App::select_action()
         create_requirement();
         break;
     case 2:
-        display_requirement();
+        read_requirement();
         break;
     case 3:
-        edit_requirement();
+        update_requirement();
         break;
     case 4:
         delete_requirement();
@@ -226,12 +226,12 @@ void App::create_requirement()
     option = UI::options_dialog("What type of requirement is it?", {"Functional", "Non-functional"});
     type = (option == 1) ? FUNCTIONAL : NON_FUNCTIONAL;
 
-    selected_document->create_requirement(Requirement(rid, body, comments, type, LEVEL_UNDEF, safety, derived));
+    selected_document->add_requirement(Requirement(rid, body, comments, type, LEVEL_UNDEF, safety, derived));
 
     system("pause");
 }
 
-void App::display_requirement()
+void App::read_requirement()
 {
     int option = 0;
     std::string id;
@@ -255,7 +255,7 @@ void App::display_requirement()
     {
         id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
-        req_ptr = selected_document->read_requirement(id);
+        req_ptr = selected_document->get_requirement_ptr(id);
 
         if (req_ptr != nullptr)
         {
@@ -279,7 +279,7 @@ void App::display_requirement()
     system("pause");
 }
 
-void App::edit_requirement()
+void App::update_requirement()
 {
     std::string id;
     Requirement *req_ptr;
@@ -294,7 +294,7 @@ void App::edit_requirement()
 
     id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
-    req_ptr = selected_document->read_requirement(id);
+    req_ptr = selected_document->get_requirement_ptr(id);
 
     if (req_ptr != nullptr)
     {
@@ -332,7 +332,7 @@ void App::delete_requirement()
 
     id = UI::string_dialog("Type the requirement ID with no spaces: ");
 
-    req_ptr = selected_document->read_requirement(id);
+    req_ptr = selected_document->get_requirement_ptr(id);
 
     if (req_ptr != nullptr)
     {
@@ -402,7 +402,6 @@ void App::create_system()
     std::cin.ignore();
     std::cout << std::endl;
 
-    //as = new AirborneSystem(name, id_prefix, dal);
     AirborneSystem as(name, id_prefix, dal);
     system_list.push_back(as);
 }

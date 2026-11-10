@@ -7,18 +7,18 @@
 #include <iostream>
 
 template <typename T>
-class RequirementsList : public Document {
+class ReqDocument : public Document {
 protected:
     std::list<T> requirements;
 
 public:
 
-    void create_requirement(Requirement req)
+    void add_requirement(Requirement req)
     {
         requirements.push_back(T(req));
     }
 
-    Requirement* read_requirement(std::string id)
+    Requirement* get_requirement_ptr(std::string id)
     {
         Requirement *req_ptr = nullptr;
 
