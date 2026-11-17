@@ -35,6 +35,6 @@ public:
     void edit_document();
     void export_document();
     void create_system();
-    void present_edit_options(Requirement *req_ptr);
+    void present_req_edit_options(Requirement *req_ptr);
     void print_requirement(Requirement *req_ptr);
 };

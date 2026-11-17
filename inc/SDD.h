@@ -13,6 +13,7 @@ private:
 public:
     SDD();
     std::string export_document();
+    void set_design_overview(std::string value);
     /*
     bool create_requirement(Requirement req);
     Requirement* get_requirement_ptr(std::string id);

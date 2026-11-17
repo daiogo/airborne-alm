@@ -3,6 +3,7 @@
 SRD::SRD()
 {
     title = "SRD - Software Requirements Description";
+    doc_type = DOC_SRD;
     software_overview = "This is the SRD software overview";
 }
 
@@ -18,3 +19,9 @@ std::string SRD::export_document()
 
     return doc;
 }
+
+void SRD::set_software_overview(std::string value)
+{
+    software_overview = value;
+}
+

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <typeinfo>
 #include "App.h"
 #include "Requirement.h"
 #include "UI.h"
@@ -56,7 +57,7 @@ void App::run()
 
 UIState App::select_system()
 {
-    int option = 0;
+    long long unsigned int option = 0;
     UIState return_state = EXIT;
     std::vector<std::string> system_names;
 
@@ -65,7 +66,7 @@ UIState App::select_system()
     std::cout << "---Select System---" << std::endl;
 
     // Aggregate the system names
-    for (int i = 0; i < system_list.size(); i++)
+    for (long long unsigned int i = 0; i < system_list.size(); i++)
     {
         system_names.push_back(system_list.at(i).get_name());
     }
@@ -77,14 +78,14 @@ UIState App::select_system()
                                 system_names);
 
     // Decide action upon input
-    if (option == system_list.size() + 1)
+    if (option == system_list.size() + 1ULL)
     {
         // Create new AirborneSystem
         create_system();
         // load to db
         return_state = SYS;
     }
-    else if (option == system_list.size() + 2)
+    else if (option == system_list.size() + 2ULL)
     {
         std::cout << "Exiting..." << std::endl;
         // run check to save?
@@ -303,7 +304,7 @@ void App::update_requirement()
 
         std::cout << std::endl << "-------------------" << std::endl << std::endl;
 
-        present_edit_options(req_ptr);
+        present_req_edit_options(req_ptr);
 
         std::cout << std::endl << "-------------------" << std::endl << std::endl;
 
@@ -355,6 +356,7 @@ void App::delete_requirement()
 
 void App::link_requirements()
 {
+    // Print header
     system("cls");
     std::cout << "---Link Requirements---" << std::endl;
     // find requirement
@@ -364,14 +366,120 @@ void App::link_requirements()
 
 void App::edit_document()
 {
+    int option = 0;
+    bool done = false;
+    std::string new_value;
+    std::string overview_section_name;
+    std::vector<std::string> options = {"Title",
+                                        "Purpose",
+                                        "Scope",
+                                        "Referenced Documents",
+                                        "CUSTOM",
+                                        "Acronyms",
+                                        "Appendix",
+                                        "Exit"};
+
+    // Print header
     system("cls");
     std::cout << "---Edit Document---" << std::endl;
 
+    // Define custom sections by doc type
+    switch (selected_document->doc_type)
+    {
+    case DOC_CRS:
+        overview_section_name = "System Overview";
+        options[4] = overview_section_name;
+        break;
+    case DOC_SRD:
+        overview_section_name = "Software Overview";
+        options[4] = overview_section_name;
+        break;
+    case DOC_SDD:
+        overview_section_name = "Design Overview";
+        options[4] = overview_section_name;
+        break;
+    }
 
+    while(!done)
+    {
+        // Run dialog
+        option = UI::options_dialog("What section do you wish to edit?", options);
+
+        // Decide action upon input
+        switch (option)
+        {
+        case 1:
+            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << selected_document->get_title() << std::endl;
+            std::cout << std::endl;
+
+            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            selected_document->set_title(new_value);
+            std::cout << std::endl;
+            break;
+        case 2:
+            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << selected_document->get_purpose() << std::endl;
+            std::cout << std::endl;
+
+            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            selected_document->set_purpose(new_value);
+            std::cout << std::endl;
+            break;
+        case 3:
+            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << selected_document->get_scope() << std::endl;
+            std::cout << std::endl;
+
+            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            selected_document->set_scope(new_value);
+            std::cout << std::endl;
+            break;
+        case 4:
+            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << selected_document->get_referenced_docs() << std::endl;
+            std::cout << std::endl;
+
+            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            selected_document->set_referenced_docs(new_value);
+            std::cout << std::endl;
+            break;
+        case 5:
+            //present_doc_edit_options(&selected_document->get, &selected_document->set_);
+            break;
+        case 6:
+            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << selected_document->get_acronyms() << std::endl;
+            std::cout << std::endl;
+
+            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            selected_document->set_acronyms(new_value);
+            std::cout << std::endl;
+            break;
+        case 7:
+            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << selected_document->get_appendix() << std::endl;
+            std::cout << std::endl;
+
+            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            selected_document->set_appendix(new_value);
+            std::cout << std::endl;
+            break;
+        case 8:
+            done = true;
+            break;
+        default:
+            std::cout << "Invalid option. Try again." << std::endl;
+            break;
+        }
+    }
+
+    std::cout << std::endl;
 }
 
 void App::export_document()
 {
+    // Print header
     system("cls");
     std::cout << "---Export Document---" << std::endl;
 
@@ -405,7 +513,7 @@ void App::create_system()
     system_list.push_back(as);
 }
 
-void App::present_edit_options(Requirement *req_ptr)
+void App::present_req_edit_options(Requirement *req_ptr)
 {
     bool done = false;
     int option = 0;
