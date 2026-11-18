@@ -61,6 +61,19 @@ public:
 
         return req_ptrs;
     }
+
+    std::list<std::string> get_requirement_ids()
+    {
+        std::list<std::string> all_ids;
+
+        for (auto& req : requirements)
+        {
+            all_ids.push_back(req.get_rid());
+        }
+
+        return all_ids;
+    }
+
 };
 
 

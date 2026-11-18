@@ -8,11 +8,11 @@ class HLR;
 
 class LLR : public Requirement {
 private:
-    std::list<HLR*> linked_hlrs;
+    std::list<std::string> linked_hlrs;
 
 public:
     LLR();//(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d);
     LLR(Requirement req);
     ~LLR();
-    std::list<HLR*>* get_linked_hlrs();
+    std::list<std::string> get_linked_hlrs();
 };

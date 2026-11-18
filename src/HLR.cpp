@@ -29,12 +29,12 @@ HLR::~HLR()
 
 }
 
-std::list<SRATS*>* HLR::get_linked_srats()
+std::list<std::string> HLR::get_linked_srats()
 {
-    return &linked_srats;
+    return linked_srats;
 }
 
-std::list<LLR*>* HLR::get_linked_llrs()
+std::list<std::string> HLR::get_linked_llrs()
 {
-    return &linked_llrs;
+    return linked_llrs;
 }

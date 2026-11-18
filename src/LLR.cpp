@@ -29,7 +29,7 @@ LLR::~LLR()
 
 }
 
-std::list<HLR*>* LLR::get_linked_hlrs()
+std::list<std::string> LLR::get_linked_hlrs()
 {
-    return &linked_hlrs;
+    return linked_hlrs;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <list>
 
 typedef enum {
     LEVEL_SRATS = 0,
@@ -42,7 +43,8 @@ public:
     void set_safety(bool s);
     void set_derived(bool d);
 
-    virtual void* get_linked_srats();
-    virtual void* get_linked_hlrs();
-    virtual void* get_linked_llrs();
+
+    virtual std::list<std::string> get_linked_srats();
+    virtual std::list<std::string> get_linked_hlrs();
+    virtual std::list<std::string> get_linked_llrs();
 };

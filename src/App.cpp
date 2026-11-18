@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <cstdlib>
 #include <typeinfo>
@@ -369,19 +370,15 @@ void App::link_requirements()
 {
     std::string id;
     Requirement *req_ptr;
+    std::list<std::string> reqs_ptr;
+    std::list<std::string> all_linked_reqs;
+    std::list<std::string> all_linkable_reqs;
+    std::list<std::string> all_possible_links;
 
     // Print header
     system("cls");
     std::cout << "---Link Requirements---" << std::endl;
 
-        for (auto* req : selected_document->get_requirements())
-        {
-            std::cout << req->get_rid() << " | " << std::endl;
-            ((SRATS)req)->get_linked_hlrs()->clear();
-        }
-        std::cout << std::endl;
-
-    /*
     id = UI::string_dialog("Type the ID of the requirement you wish to link to others: ");
 
     req_ptr = selected_document->get_requirement_ptr(id);
@@ -394,35 +391,64 @@ void App::link_requirements()
 
         std::cout << std::endl << "-------------------" << std::endl << std::endl;
 
-        // Define custom sections by doc type
+        // Fetch all requirements possible to link with this one
         switch (selected_document->doc_type)
         {
         case DOC_CRS:
+        case DOC_SDD:
+            // SRATS and LLRs can only be linked to HLRs, so they reuse this function
 
+            // Find all linked HLRs
+            reqs_ptr = req_ptr->get_linked_hlrs();
+            all_linked_reqs.insert(all_linked_reqs.end(), reqs_ptr.begin(), reqs_ptr.end());
+
+            // Find all linkable HLRs
+            reqs_ptr = selected_context->get_srd()->get_requirement_ids();
+            all_linkable_reqs.insert(all_linkable_reqs.end(), reqs_ptr.begin(), reqs_ptr.end());
             break;
         case DOC_SRD:
+            // Find all linked LLRs
+            reqs_ptr = req_ptr->get_linked_llrs();
+            all_linked_reqs.insert(all_linked_reqs.end(), reqs_ptr.begin(), reqs_ptr.end());
 
-            break;
-        case DOC_SDD:
+            // Find all linked SRATS
+            reqs_ptr = req_ptr->get_linked_srats();
+            all_linked_reqs.insert(all_linked_reqs.end(), reqs_ptr.begin(), reqs_ptr.end());
 
+            // Find all linkable LLRs
+            reqs_ptr = selected_context->get_sdd()->get_requirement_ids();
+            all_linkable_reqs.insert(all_linkable_reqs.end(), reqs_ptr.begin(), reqs_ptr.end());
+
+            // Find all linkable SRATS
+            reqs_ptr = selected_context->get_crs()->get_requirement_ids();
+            all_linkable_reqs.insert(all_linkable_reqs.end(), reqs_ptr.begin(), reqs_ptr.end());
             break;
         }
 
-
+        // Only add to all_possible_links the IDs that are not already linked
+        std::set_symmetric_difference(
+            all_linkable_reqs.begin(), all_linkable_reqs.end(),
+            all_linked_reqs.begin(), all_linked_reqs.end(),
+            std::back_inserter(all_possible_links)
+        );
 
         std::cout << "Here is the possible requirements you can link to: " << std::endl;
-        for (auto& id : *all_ids)
+        for (auto& id : all_possible_links)
         {
             std::cout << id << " | ";
         }
         std::cout << std::endl;
+
+
+        // Ask what will be added
+
+        // Then add. Might need to roll back the pointers to the lists in each req type
 
     }
     else
     {
         std::cout << "No requirements with this ID were found in this document." << std::endl;
     }
-    */
 
     system("pause");
 }

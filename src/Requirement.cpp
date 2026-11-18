@@ -80,3 +80,18 @@ void Requirement::set_derived(bool d)
 {
     derived = d;
 }
+
+std::list<std::string> Requirement::get_linked_srats()
+{
+
+}
+
+std::list<std::string> Requirement::get_linked_hlrs()
+{
+
+}
+
+std::list<std::string> Requirement::get_linked_llrs()
+{
+
+}

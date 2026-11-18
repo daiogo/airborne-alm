@@ -8,11 +8,11 @@ class HLR;
 
 class SRATS : public Requirement {
 private:
-    std::list<HLR*> linked_hlrs;
+    std::list<std::string> linked_hlrs;
 
 public:
     SRATS();//(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d);
     SRATS(Requirement req);
     ~SRATS();
-    std::list<HLR*>* get_linked_hlrs();
+    std::list<std::string> get_linked_hlrs();
 };
