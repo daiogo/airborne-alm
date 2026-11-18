@@ -17,4 +17,6 @@ public:
     HLR();//(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d);
     HLR(Requirement req);
     ~HLR();
+    std::list<SRATS*>* get_linked_srats();
+    std::list<LLR*>* get_linked_llrs();
 };

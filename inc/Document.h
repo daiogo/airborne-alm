@@ -3,7 +3,6 @@
 #include "Requirement.h"
 #include <string>
 #include <list>
-#include <iostream>
 
 typedef enum {
     DOC_CRS = 1,
@@ -21,7 +20,7 @@ protected:
     std::string appendix;
 
 public:
-    DocType doc_type;   // Public DocType member to facilitate the identification of each context for custom actions
+    DocType doc_type;   // Public DocType attribute to facilitate the identification of each context for custom actions
 
     std::string get_title();
     std::string get_purpose();

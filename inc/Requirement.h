@@ -41,4 +41,8 @@ public:
     void set_level(ReqLevel l);
     void set_safety(bool s);
     void set_derived(bool d);
+
+    virtual void* get_linked_srats();
+    virtual void* get_linked_hlrs();
+    virtual void* get_linked_llrs();
 };

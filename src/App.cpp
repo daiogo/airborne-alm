@@ -377,6 +377,7 @@ void App::link_requirements()
         for (auto* req : selected_document->get_requirements())
         {
             std::cout << req->get_rid() << " | " << std::endl;
+            ((SRATS)req)->get_linked_hlrs()->clear();
         }
         std::cout << std::endl;
 

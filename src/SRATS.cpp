@@ -28,3 +28,8 @@ SRATS::~SRATS()
 {
 
 }
+
+std::list<HLR*>* SRATS::get_linked_hlrs()
+{
+    return &linked_hlrs;
+}
