@@ -356,12 +356,53 @@ void App::delete_requirement()
 
 void App::link_requirements()
 {
+    std::string id;
+    Requirement *req_ptr;
+
     // Print header
     system("cls");
     std::cout << "---Link Requirements---" << std::endl;
-    // find requirement
-    // prompt what requirements will be linked
-    // update db
+
+    id = UI::string_dialog("Type the ID of the requirement you wish to link to others: ");
+
+    req_ptr = selected_document->get_requirement_ptr(id);
+
+    if (req_ptr != nullptr)
+    {
+        system("cls");
+        std::cout << "Your current requirement: " << std::endl;
+        print_requirement(req_ptr);
+
+        std::cout << std::endl << "-------------------" << std::endl << std::endl;
+
+        // Define custom sections by doc type
+        switch (selected_document->doc_type)
+        {
+        case DOC_CRS:
+
+            break;
+        case DOC_SRD:
+
+            break;
+        case DOC_SDD:
+
+            break;
+        }
+
+        /*std::cout << "Here is the possible requirements you can link to: " << std::endl;
+        for (auto& id : *all_ids)
+        {
+            std::cout << id << " | ";
+        }
+        std::cout << std::endl;*/
+
+    }
+    else
+    {
+        std::cout << "No requirements with this ID were found in this document." << std::endl;
+    }
+
+    system("pause");
 }
 
 void App::edit_document()
@@ -475,6 +516,7 @@ void App::edit_document()
     }
 
     std::cout << std::endl;
+    system("pause");
 }
 
 void App::export_document()
