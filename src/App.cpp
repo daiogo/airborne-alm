@@ -236,6 +236,7 @@ void App::read_requirement()
     int option = 0;
     std::string id;
     Requirement *req_ptr;
+    std::list<Requirement*> requirements_ptr = selected_document->get_requirements();
 
     // Print header
     system("cls");
@@ -269,7 +270,17 @@ void App::read_requirement()
     }
     else if (option == 2)
     {
-        selected_document->print_requirements_list();
+        if (requirements_ptr.size() > 0)
+        {
+            for (auto* req : requirements_ptr)
+            {
+                print_requirement(req);
+            }
+        }
+        else
+        {
+            std::cout << "This document currently has no requirements" << std::endl;
+        }
     }
     else
     {
@@ -363,6 +374,13 @@ void App::link_requirements()
     system("cls");
     std::cout << "---Link Requirements---" << std::endl;
 
+        for (auto* req : selected_document->get_requirements())
+        {
+            std::cout << req->get_rid() << " | " << std::endl;
+        }
+        std::cout << std::endl;
+
+    /*
     id = UI::string_dialog("Type the ID of the requirement you wish to link to others: ");
 
     req_ptr = selected_document->get_requirement_ptr(id);
@@ -389,18 +407,21 @@ void App::link_requirements()
             break;
         }
 
-        /*std::cout << "Here is the possible requirements you can link to: " << std::endl;
+
+
+        std::cout << "Here is the possible requirements you can link to: " << std::endl;
         for (auto& id : *all_ids)
         {
             std::cout << id << " | ";
         }
-        std::cout << std::endl;*/
+        std::cout << std::endl;
 
     }
     else
     {
         std::cout << "No requirements with this ID were found in this document." << std::endl;
     }
+    */
 
     system("pause");
 }
