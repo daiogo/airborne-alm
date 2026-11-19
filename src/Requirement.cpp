@@ -5,15 +5,15 @@ Requirement::Requirement()
 
 }
 
-Requirement::Requirement(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d)
+Requirement::Requirement(std::string id, std::string b, std::string c, ReqType t, bool s, bool d)
 {
     rid = id;
     body = b;
     comments = c;
     type = t;
-    level = l;
     safety = s;
     derived = d;
+    //level = LEVEL_UNDEF;
 }
 
 std::string Requirement::get_rid()
@@ -81,17 +81,17 @@ void Requirement::set_derived(bool d)
     derived = d;
 }
 
-std::list<std::string> Requirement::get_linked_srats()
+std::list<std::string>* Requirement::get_linked_srats()
 {
 
 }
 
-std::list<std::string> Requirement::get_linked_hlrs()
+std::list<std::string>* Requirement::get_linked_hlrs()
 {
 
 }
 
-std::list<std::string> Requirement::get_linked_llrs()
+std::list<std::string>* Requirement::get_linked_llrs()
 {
 
 }

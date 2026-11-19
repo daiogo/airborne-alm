@@ -28,7 +28,7 @@ protected:
 
 public:
     Requirement();
-    Requirement(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d);
+    Requirement(std::string id, std::string b, std::string c, ReqType t, bool s, bool d);
     std::string get_rid();
     std::string get_body();
     std::string get_comments();
@@ -44,7 +44,7 @@ public:
     void set_derived(bool d);
 
 
-    virtual std::list<std::string> get_linked_srats();
-    virtual std::list<std::string> get_linked_hlrs();
-    virtual std::list<std::string> get_linked_llrs();
+    virtual std::list<std::string>* get_linked_srats();
+    virtual std::list<std::string>* get_linked_hlrs();
+    virtual std::list<std::string>* get_linked_llrs();
 };

@@ -19,7 +19,7 @@ LLR::LLR(Requirement req)
     body = req.get_body();
     comments = req.get_comments();
     type = req.get_type();
-    level = req.get_level();
+    level = LEVEL_LLR;
     safety = req.get_safety();
     derived = req.get_derived();
 }
@@ -29,7 +29,7 @@ LLR::~LLR()
 
 }
 
-std::list<std::string> LLR::get_linked_hlrs()
+std::list<std::string>* LLR::get_linked_hlrs()
 {
-    return linked_hlrs;
+    return &linked_hlrs;
 }

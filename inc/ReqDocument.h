@@ -9,6 +9,7 @@ template <typename T>
 class ReqDocument : public Document {
 protected:
     std::list<T> requirements;
+    std::list<std::string> all_ids;
 
 public:
 
@@ -62,16 +63,16 @@ public:
         return req_ptrs;
     }
 
-    std::list<std::string> get_requirement_ids()
+    std::list<std::string>* get_requirement_ids()
     {
-        std::list<std::string> all_ids;
+        all_ids.clear();
 
         for (auto& req : requirements)
         {
             all_ids.push_back(req.get_rid());
         }
 
-        return all_ids;
+        return &all_ids;
     }
 
 };

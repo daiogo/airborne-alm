@@ -14,5 +14,5 @@ public:
     LLR();//(std::string id, std::string b, std::string c, ReqType t, ReqLevel l, bool s, bool d);
     LLR(Requirement req);
     ~LLR();
-    std::list<std::string> get_linked_hlrs();
+    std::list<std::string>* get_linked_hlrs();
 };

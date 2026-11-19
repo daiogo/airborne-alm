@@ -40,6 +40,6 @@ public:
     virtual Requirement* get_requirement_ptr(std::string id) = 0;
     virtual bool delete_requirement(std::string id) = 0;
     virtual std::list<Requirement*> get_requirements() = 0;
-    virtual std::list<std::string> get_requirement_ids() = 0;
+    virtual std::list<std::string>* get_requirement_ids() = 0;
 };
 

@@ -19,7 +19,7 @@ HLR::HLR(Requirement req)
     body = req.get_body();
     comments = req.get_comments();
     type = req.get_type();
-    level = req.get_level();
+    level = LEVEL_HLR;
     safety = req.get_safety();
     derived = req.get_derived();
 }
@@ -29,12 +29,12 @@ HLR::~HLR()
 
 }
 
-std::list<std::string> HLR::get_linked_srats()
+std::list<std::string>* HLR::get_linked_srats()
 {
-    return linked_srats;
+    return &linked_srats;
 }
 
-std::list<std::string> HLR::get_linked_llrs()
+std::list<std::string>* HLR::get_linked_llrs()
 {
-    return linked_llrs;
+    return &linked_llrs;
 }
