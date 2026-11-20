@@ -18,14 +18,19 @@ App::App()
     //temp
     AirborneSystem as1("Landing Gear", "LG", 'B');
     AirborneSystem as2("Motor", "FADEC", 'A');
+
+    as2.get_crs()->add_requirement(Requirement("FADEC-1","test1","meh",NON_FUNCTIONAL,false,false));
+    as2.get_crs()->add_requirement(Requirement("FADEC-2","test2","meh",FUNCTIONAL,false,false));
+    as2.get_crs()->add_requirement(Requirement("FADEC-3","test3","meh",NON_FUNCTIONAL,false,false));
+    as2.get_srd()->add_requirement(Requirement("FADEC-4","test4","meh",FUNCTIONAL,false,false));
+    as2.get_srd()->add_requirement(Requirement("FADEC-5","test5","meh",NON_FUNCTIONAL,false,false));
+    as2.get_srd()->add_requirement(Requirement("FADEC-6","test6","meh",FUNCTIONAL,false,false));
+    as2.get_sdd()->add_requirement(Requirement("FADEC-7","test7","meh",NON_FUNCTIONAL,false,false));
+    as2.get_sdd()->add_requirement(Requirement("FADEC-8","test8","meh",FUNCTIONAL,false,false));
+    as2.get_sdd()->add_requirement(Requirement("FADEC-9","test9","meh",NON_FUNCTIONAL,false,false));
+
     system_list.push_back(as1);
     system_list.push_back(as2);
-
-    /*
-    as2.get_sdd()->add_requirement(Requirement("FADEC-1","test1","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
-    as2.get_sdd()->add_requirement(Requirement("FADEC-2","test2","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
-    as2.get_sdd()->add_requirement(Requirement("FADEC-3","test3","meh",NON_FUNCTIONAL,LEVEL_SRATS,false,false));
-    */
 }
 
 void App::load_database()
@@ -370,20 +375,22 @@ void App::link_requirements()
     bool is_possible = false;
     std::string primary_id;
     std::string secondary_id;
-    Requirement *primary_req_ptr;
-    Requirement *secondary_req_ptr;
+    Requirement *primary_req_ptr = nullptr;
+    Requirement *secondary_req_ptr = nullptr;
     std::list<std::string> *generic_id_list_ptr = nullptr;
     std::list<std::string> *all_linked_reqs = nullptr;
-    std::list<std::string> *all_linkable_reqs = nullptr;
-    std::list<std::string> all_possible_links;
+    std::list<std::string> all_linkable_reqs = {};
+    std::list<std::string> all_possible_links = {};
+    ReqLevel secondary_req_level = LEVEL_UNDEF;
 
     // Print header
     system("cls");
     std::cout << "---Link Requirements---" << std::endl;
 
-    primary_id = UI::string_dialog("Type the ID of the requirement you wish to link to others: ");
+    //primary_id = UI::string_dialog("Type the ID of the requirement you wish to link to others: ");
 
-    primary_req_ptr = selected_document->get_requirement_ptr(primary_id);
+    //primary_req_ptr = selected_document->get_requirement_ptr(primary_id);
+    primary_req_ptr = selected_document->get_requirement_ptr("FADEC-4");
 
     if (primary_req_ptr != nullptr)
     {
@@ -399,6 +406,7 @@ void App::link_requirements()
         case DOC_CRS:
         case DOC_SDD:
             // SRATS and LLRs can only be linked to HLRs, so they reuse this function
+            std::cout << "CRS/SDD!-------------------------------" << std::endl;
 
             // Find all linked HLRs
             generic_id_list_ptr = primary_req_ptr->get_linked_hlrs();
@@ -406,33 +414,54 @@ void App::link_requirements()
 
             // Find all linkable HLRs
             generic_id_list_ptr = selected_context->get_srd()->get_requirement_ids();
-            all_linkable_reqs->insert(all_linkable_reqs->end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
+            all_linkable_reqs.insert(all_linkable_reqs.end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
             break;
         case DOC_SRD:
+            std::cout << "HERE SRD!-------------------------------" << std::endl;
+
             // Find all linked LLRs
             generic_id_list_ptr = primary_req_ptr->get_linked_llrs();
             all_linked_reqs->insert(all_linked_reqs->end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
-
+            std::cout << "HERE1!-------------------------------" << std::endl;
             // Find all linked SRATS
             generic_id_list_ptr = primary_req_ptr->get_linked_srats();
             all_linked_reqs->insert(all_linked_reqs->end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
-
+            std::cout << "HERE2!-------------------------------" << std::endl;
             // Find all linkable LLRs
             generic_id_list_ptr = selected_context->get_sdd()->get_requirement_ids();
-            all_linkable_reqs->insert(all_linkable_reqs->end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
-
+            all_linkable_reqs.insert(all_linkable_reqs.end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
+            std::cout << "HERE3!-------------------------------" << std::endl;
             // Find all linkable SRATS
             generic_id_list_ptr = selected_context->get_crs()->get_requirement_ids();
-            all_linkable_reqs->insert(all_linkable_reqs->end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
+            all_linkable_reqs.insert(all_linkable_reqs.end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
+            std::cout << "HERE4!-------------------------------" << std::endl;
             break;
         }
 
+        std::cout << "HERE!-------------------------------" << std::endl;
+        //std::cout << *all_linkable_reqs.begin() << std::endl;
+
         // Only add to all_possible_links the IDs that are not already linked
-        std::set_symmetric_difference(
-            all_linkable_reqs->begin(), all_linkable_reqs->end(),
-            all_linked_reqs->begin(), all_linked_reqs->end(),
-            std::back_inserter(all_possible_links)
-        );
+        if ((all_linked_reqs != nullptr) && (!all_linked_reqs->empty()))
+        {
+            std::cout << "HERE000!-------------------------------" << std::endl;
+            std::set_symmetric_difference(
+                all_linkable_reqs.begin(), all_linkable_reqs.end(),
+                all_linked_reqs->begin(), all_linked_reqs->end(),
+                std::back_inserter(all_possible_links)
+            );
+        }
+        else
+        {
+            std::cout << "HERE001!-------------------------------" << std::endl;
+            all_possible_links = all_linkable_reqs;
+        }
+
+        std::cout << "HERE11!-------------------------------" << std::endl;
+
+
+
+        std::cout << "HERE22!-------------------------------" << std::endl;
 
         std::cout << "Here is the possible requirements you can link to: " << std::endl;
         for (auto& possible_id : all_possible_links)
@@ -443,53 +472,69 @@ void App::link_requirements()
 
         secondary_id = UI::string_dialog("Type the ID you wish to link to " + primary_id + ": ");
 
-        secondary_req_ptr = selected_document->get_requirement_ptr(secondary_id);
-
+        secondary_req_ptr = selected_context->get_crs()->get_requirement_ptr(secondary_id);
         if (secondary_req_ptr != nullptr)
         {
-            // Check if decomposition is valid
-            is_possible = (std::ranges::find(all_possible_links, secondary_id) != all_possible_links.end());
-            if (is_possible)
+            secondary_req_level = LEVEL_SRATS;
+        }
+        else
+        {
+            secondary_req_ptr = selected_context->get_srd()->get_requirement_ptr(secondary_id);
+            if (secondary_req_ptr != nullptr)
             {
-                // Link requirements both ways
-                switch (selected_document->doc_type)
-                {
-                case DOC_CRS:
-                    primary_req_ptr->get_linked_hlrs()->push_back(secondary_id);
-                    secondary_req_ptr->get_linked_srats()->push_back(primary_id);
-                    break;
-                case DOC_SRD:
-                    if (secondary_req_ptr->get_level() == LEVEL_SRATS)
-                    {
-                        primary_req_ptr->get_linked_srats()->push_back(secondary_id);
-                    }
-                    else if (secondary_req_ptr->get_level() == LEVEL_LLR)
-                    {
-                        primary_req_ptr->get_linked_llrs()->push_back(secondary_id);
-                    }
-                    secondary_req_ptr->get_linked_hlrs()->push_back(primary_id);
-                    break;
-                case DOC_SDD:
-                    primary_req_ptr->get_linked_hlrs()->push_back(secondary_id);
-                    secondary_req_ptr->get_linked_llrs()->push_back(primary_id);
-                    break;
-                }
+                secondary_req_level = LEVEL_HLR;
             }
             else
             {
-                std::cout << "It was not possible to link " << primary_id << " with " << secondary_id << std::endl;
-                std::cout << "Please check if:" << std::endl;
-                std::cout << "- this requirement duo has a valid decomposition link (e.g. cannot link SRATS with LLRs)" << std::endl;
-                std::cout << "- this requirement ID has a typo or invalid character such as space" << std::endl;
-                std::cout << "- this requirement is already linked" << std::endl;
-                std::cout << "- this requirement does not exist" << std::endl;
+                secondary_req_ptr = selected_context->get_sdd()->get_requirement_ptr(secondary_id);
+                if (secondary_req_ptr != nullptr)
+                {
+                    secondary_req_level = LEVEL_LLR;
+                }
+                else
+                {
+                    std::cout << "SHOULD NOT GET HERE!!!" << std::endl;
+                }
+            }
+        }
+
+        // Check if decomposition is valid
+        is_possible = (std::ranges::find(all_possible_links, secondary_id) != all_possible_links.end());
+        if (is_possible)
+        {
+            // Link requirements both ways
+            switch (selected_document->doc_type)
+            {
+            case DOC_CRS:
+                primary_req_ptr->get_linked_hlrs()->push_back(secondary_id);
+                secondary_req_ptr->get_linked_srats()->push_back(primary_id);
+                break;
+            case DOC_SRD:
+                if (secondary_req_ptr->get_level() == LEVEL_SRATS)
+                {
+                    primary_req_ptr->get_linked_srats()->push_back(secondary_id);
+                }
+                else if (secondary_req_ptr->get_level() == LEVEL_LLR)
+                {
+                    primary_req_ptr->get_linked_llrs()->push_back(secondary_id);
+                }
+                secondary_req_ptr->get_linked_hlrs()->push_back(primary_id);
+                break;
+            case DOC_SDD:
+                primary_req_ptr->get_linked_hlrs()->push_back(secondary_id);
+                secondary_req_ptr->get_linked_llrs()->push_back(primary_id);
+                break;
             }
         }
         else
         {
-            std::cout << "No requirements with this ID were found in this document." << std::endl;
+            std::cout << "It was not possible to link " << primary_id << " with " << secondary_id << std::endl;
+            std::cout << "Please check if:" << std::endl;
+            std::cout << "- this requirement duo has a valid decomposition link (e.g. cannot link SRATS with LLRs)" << std::endl;
+            std::cout << "- this requirement ID has a typo or invalid character such as space" << std::endl;
+            std::cout << "- this requirement is already linked" << std::endl;
+            std::cout << "- this requirement does not exist" << std::endl;
         }
-
     }
     else
     {
