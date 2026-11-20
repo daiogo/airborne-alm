@@ -280,6 +280,7 @@ void App::read_requirement()
             for (auto* req : requirements_ptr)
             {
                 print_requirement(req);
+                std::cout << std::endl << "------------------------------------" << std::endl;
             }
         }
         else
@@ -387,10 +388,10 @@ void App::link_requirements()
     system("cls");
     std::cout << "---Link Requirements---" << std::endl;
 
-    //primary_id = UI::string_dialog("Type the ID of the requirement you wish to link to others: ");
+    primary_id = UI::string_dialog("Type the ID of the requirement you wish to link to others: ");
 
-    //primary_req_ptr = selected_document->get_requirement_ptr(primary_id);
-    primary_req_ptr = selected_document->get_requirement_ptr("FADEC-4");
+    primary_req_ptr = selected_document->get_requirement_ptr(primary_id);
+    //primary_req_ptr = selected_document->get_requirement_ptr("FADEC-4");
 
     if (primary_req_ptr != nullptr)
     {
@@ -473,28 +474,12 @@ void App::link_requirements()
         secondary_id = UI::string_dialog("Type the ID you wish to link to " + primary_id + ": ");
 
         secondary_req_ptr = selected_context->get_crs()->get_requirement_ptr(secondary_id);
-        if (secondary_req_ptr != nullptr)
-        {
-            secondary_req_level = LEVEL_SRATS;
-        }
-        else
+        if (secondary_req_ptr == nullptr)
         {
             secondary_req_ptr = selected_context->get_srd()->get_requirement_ptr(secondary_id);
-            if (secondary_req_ptr != nullptr)
-            {
-                secondary_req_level = LEVEL_HLR;
-            }
-            else
+            if (secondary_req_ptr == nullptr)
             {
                 secondary_req_ptr = selected_context->get_sdd()->get_requirement_ptr(secondary_id);
-                if (secondary_req_ptr != nullptr)
-                {
-                    secondary_req_level = LEVEL_LLR;
-                }
-                else
-                {
-                    std::cout << "SHOULD NOT GET HERE!!!" << std::endl;
-                }
             }
         }
 
@@ -766,8 +751,34 @@ void App::print_requirement(Requirement *req_ptr)
     std::cout << "Comments: " << std::endl;
     std::cout << req_ptr->get_comments() << std::endl;
     std::cout << std::endl;
-    std::cout << "Linked requirements: " << std::endl;
-    std::cout << "TBD" << std::endl;
-    std::cout << std::endl;
+
+    switch(req_ptr->get_level())
+    {
+    case LEVEL_SRATS:
+    case LEVEL_LLR:
+        std::cout << "Linked HLRs: " << std::endl;
+        for (auto& id : *(req_ptr->get_linked_hlrs()))
+        {
+            std::cout << id << " | ";
+        }
+        std::cout << std::endl;
+        break;
+    case LEVEL_HLR:
+        std::cout << "Linked LLRs: " << std::endl;
+        for (auto& id : *(req_ptr->get_linked_llrs()))
+        {
+            std::cout << id << " | ";
+        }
+        std::cout << std::endl << std::endl;
+
+        std::cout << "Linked SRATS: " << std::endl;
+        for (auto& id : *(req_ptr->get_linked_srats()))
+        {
+            std::cout << id << " | ";
+        }
+        std::cout << std::endl;
+        break;
+    }
+    //std::cout << std::endl;
 }
 
