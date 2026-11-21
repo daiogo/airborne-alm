@@ -379,7 +379,7 @@ void App::link_requirements()
     Requirement *primary_req_ptr = nullptr;
     Requirement *secondary_req_ptr = nullptr;
     std::list<std::string> *generic_id_list_ptr = nullptr;
-    std::list<std::string> *all_linked_reqs = nullptr;
+    std::list<std::string> all_linked_reqs = {};
     std::list<std::string> all_linkable_reqs = {};
     std::list<std::string> all_possible_links = {};
     ReqLevel secondary_req_level = LEVEL_UNDEF;
@@ -411,7 +411,7 @@ void App::link_requirements()
 
             // Find all linked HLRs
             generic_id_list_ptr = primary_req_ptr->get_linked_hlrs();
-            all_linked_reqs->insert(all_linked_reqs->end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
+            all_linked_reqs.insert(all_linked_reqs.end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
 
             // Find all linkable HLRs
             generic_id_list_ptr = selected_context->get_srd()->get_requirement_ids();
@@ -422,11 +422,11 @@ void App::link_requirements()
 
             // Find all linked LLRs
             generic_id_list_ptr = primary_req_ptr->get_linked_llrs();
-            all_linked_reqs->insert(all_linked_reqs->end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
+            all_linked_reqs.insert(all_linked_reqs.end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
             std::cout << "HERE1!-------------------------------" << std::endl;
             // Find all linked SRATS
             generic_id_list_ptr = primary_req_ptr->get_linked_srats();
-            all_linked_reqs->insert(all_linked_reqs->end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
+            all_linked_reqs.insert(all_linked_reqs.end(), generic_id_list_ptr->begin(), generic_id_list_ptr->end());
             std::cout << "HERE2!-------------------------------" << std::endl;
             // Find all linkable LLRs
             generic_id_list_ptr = selected_context->get_sdd()->get_requirement_ids();
@@ -443,13 +443,16 @@ void App::link_requirements()
         //std::cout << *all_linkable_reqs.begin() << std::endl;
 
         // Only add to all_possible_links the IDs that are not already linked
-        if ((all_linked_reqs != nullptr) && (!all_linked_reqs->empty()))
+        //if ((all_linked_reqs != nullptr) && (!all_linked_reqs.empty()))
+        if (!all_linked_reqs.empty())
         {
             std::cout << "HERE000!-------------------------------" << std::endl;
-            std::set_symmetric_difference(
+            all_linkable_reqs.sort();
+            all_linked_reqs.sort();
+            std::set_difference(
                 all_linkable_reqs.begin(), all_linkable_reqs.end(),
-                all_linked_reqs->begin(), all_linked_reqs->end(),
-                std::back_inserter(all_possible_links)
+                all_linked_reqs.begin(), all_linked_reqs.end(),
+                std::inserter(all_possible_links, all_possible_links.begin())
             );
         }
         else
