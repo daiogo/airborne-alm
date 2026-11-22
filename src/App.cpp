@@ -561,59 +561,84 @@ void App::edit_document()
         switch (option)
         {
         case 1:
-            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << "Your current " << options[option-1] << " is: " << std::endl;
             std::cout << selected_document->get_title() << std::endl;
             std::cout << std::endl;
 
-            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            new_value = UI::string_dialog("Type the new " + options[option-1] + ": ");
             selected_document->set_title(new_value);
             std::cout << std::endl;
             break;
         case 2:
-            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << "Your current " << options[option-1] << " is: " << std::endl;
             std::cout << selected_document->get_purpose() << std::endl;
             std::cout << std::endl;
 
-            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            new_value = UI::string_dialog("Type the new " + options[option-1] + ": ");
             selected_document->set_purpose(new_value);
             std::cout << std::endl;
             break;
         case 3:
-            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << "Your current " << options[option-1] << " is: " << std::endl;
             std::cout << selected_document->get_scope() << std::endl;
             std::cout << std::endl;
 
-            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            new_value = UI::string_dialog("Type the new " + options[option-1] + ": ");
             selected_document->set_scope(new_value);
             std::cout << std::endl;
             break;
         case 4:
-            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << "Your current " << options[option-1] << " is: " << std::endl;
             std::cout << selected_document->get_referenced_docs() << std::endl;
             std::cout << std::endl;
 
-            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            new_value = UI::string_dialog("Type the new " + options[option-1] + ": ");
             selected_document->set_referenced_docs(new_value);
             std::cout << std::endl;
             break;
         case 5:
-            //present_doc_edit_options(&selected_document->get, &selected_document->set_);
+            std::cout << "Your current " << options[option-1] << " is: " << std::endl;
+            switch(selected_document->doc_type)
+            {
+            case DOC_CRS:
+                std::cout << selected_document->get_system_overview() << std::endl;
+                std::cout << std::endl;
+
+                new_value = UI::string_dialog("Type the new " + options[option-1] + ": ");
+                selected_document->set_system_overview(new_value);
+                break;
+            case DOC_SRD:
+                std::cout << selected_document->get_software_overview() << std::endl;
+                std::cout << std::endl;
+
+                new_value = UI::string_dialog("Type the new " + options[option-1] + ": ");
+                selected_document->set_software_overview(new_value);
+                break;
+            case DOC_SDD:
+                std::cout << selected_document->get_design_overview() << std::endl;
+                std::cout << std::endl;
+
+                new_value = UI::string_dialog("Type the new " + options[option-1] + ": ");
+                selected_document->set_design_overview(new_value);
+                break;
+            }
+            std::cout << std::endl;
             break;
         case 6:
-            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << "Your current " << options[option-1] << " is: " << std::endl;
             std::cout << selected_document->get_acronyms() << std::endl;
             std::cout << std::endl;
 
-            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            new_value = UI::string_dialog("Type the new " + options[option-1] + ": ");
             selected_document->set_acronyms(new_value);
             std::cout << std::endl;
             break;
         case 7:
-            std::cout << "Your current " << options[option+1] << " is: " << std::endl;
+            std::cout << "Your current " << options[option-1] << " is: " << std::endl;
             std::cout << selected_document->get_appendix() << std::endl;
             std::cout << std::endl;
 
-            new_value = UI::string_dialog("Type the new " + options[option+1] + ": ");
+            new_value = UI::string_dialog("Type the new " + options[option-1] + ": ");
             selected_document->set_appendix(new_value);
             std::cout << std::endl;
             break;

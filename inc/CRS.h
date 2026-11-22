@@ -7,18 +7,11 @@
 
 class CRS : public ReqDocument<SRATS> {
 private:
-    //std::list<SRATS> srats_list;
     std::string system_overview;
 
 public:
     CRS();
     std::string export_document();
+    std::string get_system_overview();
     void set_system_overview(std::string value);
-    /*
-    bool create_requirement(Requirement req);
-    Requirement* get_requirement_ptr(std::string id);
-    bool update_requirement(std::string id);
-    bool delete_requirement(std::string id);
-    void print_requirements_list();
-    */
 };

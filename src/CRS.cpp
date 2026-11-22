@@ -24,3 +24,8 @@ void CRS::set_system_overview(std::string value)
 {
     system_overview = value;
 }
+
+std::string CRS::get_system_overview()
+{
+    return system_overview;
+}

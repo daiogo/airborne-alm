@@ -35,11 +35,20 @@ public:
     void set_acronyms(std::string value);
     void set_appendix(std::string value);
 
+    // From ReqDocument
     virtual std::string export_document() = 0;
     virtual void add_requirement(Requirement req) = 0;
     virtual Requirement* get_requirement_ptr(std::string id) = 0;
     virtual bool delete_requirement(std::string id) = 0;
     virtual std::list<Requirement*> get_requirements() = 0;
     virtual std::list<std::string>* get_requirement_ids() = 0;
+
+    // From CRS, SRD and SDD
+    virtual std::string get_system_overview();
+    virtual void set_system_overview(std::string value);
+    virtual std::string get_software_overview();
+    virtual void set_software_overview(std::string value);
+    virtual std::string get_design_overview();
+    virtual void set_design_overview(std::string value);
 };
 

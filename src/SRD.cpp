@@ -25,3 +25,8 @@ void SRD::set_software_overview(std::string value)
     software_overview = value;
 }
 
+
+std::string SRD::get_software_overview()
+{
+    return software_overview;
+}

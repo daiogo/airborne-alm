@@ -60,3 +60,32 @@ void Document::set_appendix(std::string value)
     appendix = value;
 }
 
+std::string Document::get_system_overview()
+{
+
+}
+
+void Document::set_system_overview(std::string value)
+{
+
+}
+
+std::string Document::get_software_overview()
+{
+
+}
+
+void Document::set_software_overview(std::string value)
+{
+
+}
+
+std::string Document::get_design_overview()
+{
+
+}
+
+void Document::set_design_overview(std::string value)
+{
+
+}

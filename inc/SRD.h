@@ -7,18 +7,11 @@
 
 class SRD : public ReqDocument<HLR> {
 private:
-    //std::list<HLR> hlr_list;
     std::string software_overview;
 
 public:
     SRD();
     std::string export_document();
+    std::string get_software_overview();
     void set_software_overview(std::string value);
-    /*
-    bool create_requirement(Requirement req);
-    Requirement* get_requirement_ptr(std::string id);
-    bool update_requirement(std::string id);
-    bool delete_requirement(std::string id);
-    void print_requirements_list();
-    */
 };

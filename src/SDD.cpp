@@ -24,3 +24,8 @@ void SDD::set_design_overview(std::string value)
 {
     design_overview = value;
 }
+
+std::string SDD::get_design_overview()
+{
+    return design_overview;
+}
