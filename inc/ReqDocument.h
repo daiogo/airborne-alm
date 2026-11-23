@@ -2,6 +2,7 @@
 
 #include "Requirement.h"
 #include "Document.h"
+#include <sstream>
 #include <string>
 #include <list>
 
@@ -73,6 +74,62 @@ public:
         }
 
         return &all_ids;
+    }
+
+    std::string export_reqs_to_markdown()
+    {
+        std::ostringstream req_section;
+
+        // Transform requirements list into Markdown list
+        for (auto& req : requirements)
+        {
+            req_section << "**ID:** " << req.get_rid() << "\\ \n";
+            req_section << "**Safety:** " << (req.get_safety() ? "True" : "False") << "\\ \n";
+            req_section << "**Derived:** " << (req.get_derived() ? "True" : "False") << "\\ \n";
+            req_section << "**Type:** " << (req.get_type() ? "Functional" : "Non-functional") << "\n";
+            req_section << "\n";
+            req_section << "**Body:** " << "\n";
+            req_section << req.get_body() << "\n";
+            req_section << "\n";
+            req_section << "**Comments:** " << "\n";
+            req_section << req.get_comments() << "\n";
+            req_section << "\n";
+
+            switch(req.get_level())
+            {
+            case LEVEL_SRATS:
+            case LEVEL_LLR:
+                req_section << "**Linked HLRs:** " << "\n";
+                for (auto& id : *(req.get_linked_hlrs()))
+                {
+                    req_section << id << " | ";
+                }
+                req_section << "\n";
+                break;
+
+            case LEVEL_HLR:
+                req_section << "**Linked SRATS:** " << "\n";
+                for (auto& id : *(req.get_linked_srats()))
+                {
+                    req_section << id << " | ";
+                }
+                req_section << "\n" << "\n";
+
+                req_section << "**Linked LLRs:** " << "\n";
+                for (auto& id : *(req.get_linked_llrs()))
+                {
+                    req_section << id << " | ";
+                }
+                req_section << "\n";
+                break;
+            default:
+                req_section << "EXPORT ERROR" << "\n";
+                break;
+            }
+            req_section << "\n---\n";
+        }
+
+        return req_section.str();
     }
 
 };

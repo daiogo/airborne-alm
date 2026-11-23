@@ -2,8 +2,8 @@
 
 SRD::SRD()
 {
-    title = "SRD - Software Requirements Description";
     doc_type = DOC_SRD;
+    title = "SRD - Software Requirements Description";
     software_overview = "This is the SRD software overview";
 }
 

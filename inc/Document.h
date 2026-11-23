@@ -42,6 +42,7 @@ public:
     virtual bool delete_requirement(std::string id) = 0;
     virtual std::list<Requirement*> get_requirements() = 0;
     virtual std::list<std::string>* get_requirement_ids() = 0;
+    virtual std::string export_reqs_to_markdown() = 0;  // Put here to avoid function duplication
 
     // From CRS, SRD and SDD
     virtual std::string get_system_overview();

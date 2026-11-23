@@ -382,7 +382,6 @@ void App::link_requirements()
     std::list<std::string> all_linked_reqs = {};
     std::list<std::string> all_linkable_reqs = {};
     std::list<std::string> all_possible_links = {};
-    ReqLevel secondary_req_level = LEVEL_UNDEF;
 
     // Print header
     system("cls");
@@ -790,7 +789,9 @@ void App::print_requirement(Requirement *req_ptr)
         }
         std::cout << std::endl;
         break;
+    default:
+        std::cout << "Error accessing printed requirements" << std::endl << std::endl;
+        break;
     }
-    //std::cout << std::endl;
 }
 

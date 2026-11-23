@@ -2,8 +2,8 @@
 
 SDD::SDD()
 {
-    title = "SDD - Software Design Description";
     doc_type = DOC_SDD;
+    title = "SDD - Software Design Description";
     design_overview = "This is the SDD software overview";
 }
 
