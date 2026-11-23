@@ -5,7 +5,12 @@ CRS::CRS()
 {
     doc_type = DOC_CRS;
     title = "CRS - Component System Requirements";
-    system_overview = "This is the CRS design overview";
+    purpose = "Describe here the goal for which this document is being written.";
+    scope = "Describe what will be done and what will not be done in this document.";
+    referenced_docs = "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.";
+    system_overview = "This is the CRS system overview";
+    acronyms = "N/A";
+    appendix = "N/A";
 }
 
 std::string CRS::export_document()
