@@ -9,15 +9,19 @@ SDD::SDD()
 
 std::string SDD::export_document()
 {
-    std::string doc;
+    std::ostringstream doc;
 
-    doc = title +
-          "\n\n" +
-          design_overview +
-          "\n\n";// +
-          //requirements
+    // Assemble the Markdown file structure
+    doc << "# " << title << "\n\n"
+        << "## Purpose\n" << purpose << "\n\n"
+        << "## Scope\n" << scope << "\n\n"
+        << "## Referenced Documents\n" << referenced_docs << "\n\n"
+        << "## System Overview\n" << design_overview << "\n\n"
+        << "## Requirements\n" << export_reqs_to_markdown() << "\n\n"
+        << "## Acronyms\n" << acronyms << "\n\n"
+        << "## Appendix\n" << appendix << "\n\n";
 
-    return doc;
+    return doc.str();
 }
 
 void SDD::set_design_overview(std::string value)

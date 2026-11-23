@@ -62,7 +62,7 @@ void Document::set_appendix(std::string value)
 
 std::string Document::get_system_overview()
 {
-
+    return "ERROR GETTING THE RIGHT DATA";
 }
 
 void Document::set_system_overview(std::string value)
@@ -72,7 +72,7 @@ void Document::set_system_overview(std::string value)
 
 std::string Document::get_software_overview()
 {
-
+    return "ERROR GETTING THE RIGHT DATA";
 }
 
 void Document::set_software_overview(std::string value)
@@ -82,7 +82,7 @@ void Document::set_software_overview(std::string value)
 
 std::string Document::get_design_overview()
 {
-
+    return "ERROR GETTING THE RIGHT DATA";
 }
 
 void Document::set_design_overview(std::string value)

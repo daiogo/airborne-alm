@@ -83,9 +83,9 @@ public:
         // Transform requirements list into Markdown list
         for (auto& req : requirements)
         {
-            req_section << "**ID:** " << req.get_rid() << "\\ \n";
-            req_section << "**Safety:** " << (req.get_safety() ? "True" : "False") << "\\ \n";
-            req_section << "**Derived:** " << (req.get_derived() ? "True" : "False") << "\\ \n";
+            req_section << "**ID:** " << req.get_rid() << "\\\n";
+            req_section << "**Safety:** " << (req.get_safety() ? "True" : "False") << "\\\n";
+            req_section << "**Derived:** " << (req.get_derived() ? "True" : "False") << "\\\n";
             req_section << "**Type:** " << (req.get_type() ? "Functional" : "Non-functional") << "\n";
             req_section << "\n";
             req_section << "**Body:** " << "\n";

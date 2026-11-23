@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <cstdlib>
-#include <typeinfo>
+#include <fstream>
 #include "App.h"
 #include "Requirement.h"
 #include "UI.h"
@@ -660,7 +660,24 @@ void App::export_document()
     system("cls");
     std::cout << "---Export Document---" << std::endl;
 
-    std::cout << selected_document->export_document() << std::endl;
+    // Create and open the file
+    std::ofstream output_file(selected_document->get_title() + ".md");
+
+    // Check if the file opened successfully
+    if (!output_file)
+    {
+        std::cout << "Error creating file" << std::endl << std::endl;
+    }
+    else
+    {
+        // Write the string to the file
+        output_file << selected_document->export_document();
+
+        // Close the file
+        output_file.close();
+
+        std::cout << "Document successfully exported" << std::endl << std::endl;
+    }
 
     system("pause");
 }
