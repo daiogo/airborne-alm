@@ -24,11 +24,6 @@ LLR::LLR(Requirement req)
     derived = req.get_derived();
 }
 
-LLR::~LLR()
-{
-
-}
-
 std::list<std::string>* LLR::get_linked_hlrs()
 {
     return &linked_hlrs;

@@ -24,11 +24,6 @@ SRATS::SRATS(Requirement req)
     derived = req.get_derived();
 }
 
-SRATS::~SRATS()
-{
-
-}
-
 std::list<std::string>* SRATS::get_linked_hlrs()
 {
     return &linked_hlrs;

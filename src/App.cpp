@@ -12,8 +12,8 @@ App::App()
     ui_state = SYS;
 
     // Init and load database
-    //dao.init();
-    //dao.load();
+    dao.init();
+    dao.load();
 
     //temp
     AirborneSystem as1("Landing Gear", "LG", 'B');
@@ -52,7 +52,7 @@ void App::run()
             ui_state = select_document();
             break;
         case REQ:
-            std::cout << "---Select ACTION---" << std::endl;
+            std::cout << "---Select Action---" << std::endl;
             ui_state = select_action();
             break;
         default:
@@ -77,7 +77,7 @@ UIState App::select_system()
         system_names.push_back(system_list.at(i).get_name());
     }
     system_names.push_back("Create new system");
-    system_names.push_back("Exit");
+    system_names.push_back("Exit and save");
 
     // Run dialog
     option = UI::options_dialog("Select a system context to work on: ",
@@ -93,8 +93,9 @@ UIState App::select_system()
     }
     else if (option == system_list.size() + 2ULL)
     {
+        std::cout << "Saving..." << std::endl;
+        dao.save();
         std::cout << "Exiting..." << std::endl;
-        // run check to save?
         return_state = EXIT;
     }
     else
@@ -208,7 +209,7 @@ UIState App::select_action()
 void App::create_requirement()
 {
     int option = 0;
-    std::string rid = selected_context->get_id_prefix() + "-" + selected_context->get_id_count();
+    std::string rid = selected_context->get_id_prefix() + "-" + selected_context->get_and_increment_id_count();
     std::string body;
     std::string comments;
     ReqType type;

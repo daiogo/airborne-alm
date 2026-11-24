@@ -1,17 +1,16 @@
 #pragma once
 
 #include <string>
-/*
+#include <fstream>
+
 class DAO {
 protected:
     std::string filepath;
     std::fstream file;
 
 public:
-    DAO();
-    bool init();
-    bool load();
-    bool save();
-
+    virtual bool init() = 0;
+    virtual bool load() = 0;
+    virtual bool save() = 0;
 };
-*/
+

@@ -51,6 +51,11 @@ bool Requirement::get_derived()
     return derived;
 }
 
+void Requirement::set_rid(std::string id)
+{
+    rid = id;
+}
+
 void Requirement::set_body(std::string b)
 {
     body = b;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AirborneSystem.h"
-#include "DAO.h"
+#include "JSONdb.h"
 #include <vector>
 
 typedef enum {
@@ -17,7 +17,7 @@ private:
     AirborneSystem *selected_context;
     Document *selected_document;
     UIState ui_state;
-    //DAO dao;
+    JSONdb dao;
 
 public:
     App();

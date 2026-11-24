@@ -24,11 +24,6 @@ HLR::HLR(Requirement req)
     derived = req.get_derived();
 }
 
-HLR::~HLR()
-{
-
-}
-
 std::list<std::string>* HLR::get_linked_srats()
 {
     return &linked_srats;
