@@ -1,1 +1,170 @@
-
+[
+    {
+        "name": "Landing Gear",
+        "id_prefix": "LG",
+        "id_count": 0,
+        "dal": "A",
+        "crs_doc": {
+            "title": "CRS - Component Requirement Specification",
+            "purpose": "",
+            "scope": "",
+            "referenced_docs": "",
+            "acronyms": "",
+            "appendix": "",
+            "system_overview": "",
+            "requirements": []
+        },
+        "srd_doc": {
+            "title": "SRD - Software Requirements Description",
+            "purpose": "",
+            "scope": "",
+            "referenced_docs": "",
+            "acronyms": "",
+            "appendix": "",
+            "system_overview": "",
+            "requirements": []
+        },
+        "sdd_doc": {
+            "title": "SDD - Software Design Description",
+            "purpose": "",
+            "scope": "",
+            "referenced_docs": "",
+            "acronyms": "",
+            "appendix": "",
+            "system_overview": "",
+            "requirements": []
+        }
+    },
+    {
+        "name": "Motor",
+        "id_prefix": "FADEC",
+        "id_count": 10,
+        "dal": "A",
+        "crs_doc": {
+            "title": "CRS - Component Requirement Specification",
+            "purpose": "Describe here the goal for which this document is being written.",
+            "scope": "Describe what will be done and what will not be done in this document.",
+            "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
+            "acronyms": "N/A",
+            "appendix": "N/A",
+            "system_overview": "This is the CRS system overview",
+            "requirements": [
+                {
+                    "rid": "FADEC-1",
+                    "body": "test1",
+                    "comments": "meh",
+                    "type": 1,
+                    "level": 0,
+                    "safety": false,
+                    "derived": false,
+                    "linked_hlrs": []
+                },
+                {
+                    "rid": "FADEC-2",
+                    "body": "test2",
+                    "comments": "meh",
+                    "type": 0,
+                    "level": 0,
+                    "safety": true,
+                    "derived": true,
+                    "linked_hlrs": []
+                },
+                {
+                    "rid": "FADEC-3",
+                    "body": "test3",
+                    "comments": "meh",
+                    "type": 1,
+                    "level": 0,
+                    "safety": false,
+                    "derived": false,
+                    "linked_hlrs": []
+                }
+            ]
+        },
+        "srd_doc": {
+            "title": "SRD - Software Requirements Description",
+            "purpose": "Describe here the goal for which this document is being written.",
+            "scope": "Describe what will be done and what will not be done in this document.",
+            "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
+            "acronyms": "N/A",
+            "appendix": "N/A",
+            "system_overview": "This is the SRD software overview",
+            "requirements": [
+                {
+                    "rid": "FADEC-4",
+                    "body": "test4",
+                    "comments": "meh",
+                    "type": 0,
+                    "level": 1,
+                    "safety": true,
+                    "derived": true,
+                    "linked_srats": [],
+                    "linked_llrs": []
+                },
+                {
+                    "rid": "FADEC-5",
+                    "body": "test5",
+                    "comments": "meh",
+                    "type": 0,
+                    "level": 1,
+                    "safety": false,
+                    "derived": false,
+                    "linked_srats": [],
+                    "linked_llrs": []
+                },
+                {
+                    "rid": "FADEC-6",
+                    "body": "test6",
+                    "comments": "meh",
+                    "type": 0,
+                    "level": 1,
+                    "safety": true,
+                    "derived": true,
+                    "linked_srats": [],
+                    "linked_llrs": []
+                }
+            ]
+        },
+        "sdd_doc": {
+            "title": "SDD - Software Design Description",
+            "purpose": "Describe here the goal for which this document is being written.",
+            "scope": "Describe what will be done and what will not be done in this document.",
+            "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
+            "acronyms": "N/A",
+            "appendix": "N/A",
+            "system_overview": "This is the SDD design overview",
+            "requirements": [
+                                {
+                    "rid": "FADEC-7",
+                    "body": "test7",
+                    "comments": "meh",
+                    "type": 1,
+                    "level": 2,
+                    "safety": false,
+                    "derived": false,
+                    "linked_hlrs": []
+                },
+                {
+                    "rid": "FADEC-8",
+                    "body": "test8",
+                    "comments": "meh",
+                    "type": 0,
+                    "level": 2,
+                    "safety": true,
+                    "derived": true,
+                    "linked_hlrs": []
+                },
+                {
+                    "rid": "FADEC-9",
+                    "body": "test9",
+                    "comments": "meh",
+                    "type": 1,
+                    "level": 2,
+                    "safety": false,
+                    "derived": false,
+                    "linked_hlrs": []
+                }
+            ]
+        }
+    }
+]
