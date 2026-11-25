@@ -12,9 +12,9 @@ App::App()
     ui_state = SYS;
 
     // Init and load database
-    dao.init();
     dao.load();
 
+    /*
     //temp
     AirborneSystem as1("Landing Gear", "LG", 'B');
     AirborneSystem as2("Motor", "FADEC", 'A');
@@ -31,6 +31,7 @@ App::App()
 
     system_list.push_back(as1);
     system_list.push_back(as2);
+    */
 }
 
 void App::load_database()
@@ -811,5 +812,10 @@ void App::print_requirement(Requirement *req_ptr)
         std::cout << "Error accessing printed requirements" << std::endl << std::endl;
         break;
     }
+}
+
+std::vector<AirborneSystem>& App::get_system_list()
+{
+    return system_list;
 }
 
