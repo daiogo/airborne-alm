@@ -9,7 +9,7 @@ protected:
     std::fstream file;
 
 public:
-    virtual bool load();
-    virtual bool save();
+    virtual bool load() = 0;
+    virtual bool save() = 0;
 };
 

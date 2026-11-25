@@ -11,9 +11,6 @@ App::App()
     // Start selecting document context
     ui_state = SYS;
 
-    // Init and load database
-    dao.load();
-
     /*
     //temp
     AirborneSystem as1("Landing Gear", "LG", 'B');
@@ -41,6 +38,10 @@ void App::load_database()
 
 void App::run()
 {
+    // Init and load database
+    std::cout << "Loading..." << std::endl;
+    dao.load();
+
     do {
         switch (ui_state)
         {
@@ -60,6 +61,10 @@ void App::run()
             break;
         }
     } while(ui_state != EXIT);
+
+    std::cout << "Saving..." << std::endl;
+    dao.save();
+    std::cout << "Exiting..." << std::endl;
 }
 
 UIState App::select_system()
@@ -94,9 +99,6 @@ UIState App::select_system()
     }
     else if (option == system_list.size() + 2ULL)
     {
-        std::cout << "Saving..." << std::endl;
-        dao.save();
-        std::cout << "Exiting..." << std::endl;
         return_state = EXIT;
     }
     else
