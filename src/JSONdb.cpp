@@ -74,10 +74,6 @@ void JSONdb::load_document(Document* doc_ptr, json json_doc)
     if constexpr (std::is_same_v<T, SRATS>)
     {
         doc_ptr->set_system_overview(json_doc["system_overview"]);
-        for (auto& id : requirement["linked_hlrs"])
-        {
-            //req.get_linked_hlrs()->push_back(...);
-        }
     }
     else if constexpr (std::is_same_v<T, HLR>)
     {
@@ -86,10 +82,6 @@ void JSONdb::load_document(Document* doc_ptr, json json_doc)
     else if constexpr (std::is_same_v<T, LLR>)
     {
         doc_ptr->set_design_overview(json_doc["design_overview"]);
-    }
-    else
-    {
-        // Invalid type
     }
 
     // Populate common fields
@@ -111,6 +103,29 @@ void JSONdb::load_document(Document* doc_ptr, json json_doc)
         req.set_level(requirement["level"]);
         req.set_safety(requirement["safety"]);
         req.set_derived(requirement["derived"]);
+
+        // Populate the linked requirements
+        if constexpr (std::is_same_v<T, SRATS> || std::is_same_v<T, LLR>)
+        {
+            req.get_linked_hlrs()->clear();
+            for (auto& id : requirement["linked_hlrs"])
+            {
+                req.get_linked_hlrs()->push_back(id);
+            }
+        }
+        else if constexpr (std::is_same_v<T, HLR>)
+        {
+            req.get_linked_srats()->clear();
+            req.get_linked_llrs()->clear();
+            for (auto& id : requirement["linked_srats"])
+            {
+                req.get_linked_srats()->push_back(id);
+            }
+            for (auto& id : requirement["linked_llrs"])
+            {
+                req.get_linked_llrs()->push_back(id);
+            }
+        }
 
         std::cout << "Created" << std::endl;
 

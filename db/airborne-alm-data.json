@@ -57,7 +57,7 @@
                     "level": 0,
                     "safety": false,
                     "derived": false,
-                    "linked_hlrs": []
+                    "linked_hlrs": ["FADEC-4"]
                 },
                 {
                     "rid": "FADEC-2",
@@ -67,7 +67,7 @@
                     "level": 0,
                     "safety": true,
                     "derived": true,
-                    "linked_hlrs": []
+                    "linked_hlrs": ["FADEC-4"]
                 },
                 {
                     "rid": "FADEC-3",
@@ -98,8 +98,8 @@
                     "level": 1,
                     "safety": true,
                     "derived": true,
-                    "linked_srats": [],
-                    "linked_llrs": []
+                    "linked_srats": ["FADEC-1", "FADEC-2"],
+                    "linked_llrs": ["FADEC-8", "FADEC-9"]
                 },
                 {
                     "rid": "FADEC-5",
@@ -152,7 +152,7 @@
                     "level": 2,
                     "safety": true,
                     "derived": true,
-                    "linked_hlrs": []
+                    "linked_hlrs": ["FADEC-4"]
                 },
                 {
                     "rid": "FADEC-9",
@@ -162,7 +162,7 @@
                     "level": 2,
                     "safety": false,
                     "derived": false,
-                    "linked_hlrs": []
+                    "linked_hlrs": ["FADEC-4"]
                 }
             ]
         }
