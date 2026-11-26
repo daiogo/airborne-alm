@@ -3,8 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 
-//int Class::var = 0;
-std::string JSONdb::filepath;
+std::string JSONdb::filepath = "./db/airborne-alm-data.json";
 std::fstream JSONdb::file;
 
 /*
@@ -16,7 +15,7 @@ JSONdb::JSONdb()
 
 void JSONdb::init()
 {
-    filepath = "./db/airborne-alm-data.json";
+    //filepath = "./db/airborne-alm-data.json";
 }
 
 bool JSONdb::load(App* app_ptr)
@@ -41,18 +40,13 @@ bool JSONdb::load(App* app_ptr)
             as.set_id_count(json_file[i]["id_count"]);
             as.set_dal(json_file[i]["dal"]);
 
-            // Load documents
-            load_document(&as, DOC_CRS, json_file[i]["crs_doc"]);
-            //load_document(&as, DOC_SRD, i);
-            //load_document(&as, DOC_SDD, i);
+            // Load each document
+            load_document<SRATS>(as.get_crs(), json_file[i]["crs_doc"]);
+            load_document<HLR>(as.get_srd(), json_file[i]["srd_doc"]);
+            load_document<LLR>(as.get_sdd(), json_file[i]["sdd_doc"]);
 
             // Load system into list
             app_ptr->get_system_list()->push_back(as);
-
-            //std::cout << as.get_name() << std::endl;
-            //std::cout << as.get_id_prefix() << std::endl;
-            //std::cout << as.get_id_count() << std::endl;
-            //std::cout << as.get_dal() << std::endl;
         }
 
         success = true;
@@ -71,47 +65,34 @@ bool JSONdb::save()
     return success;
 }
 
-void JSONdb::load_document(AirborneSystem* as, DocType doc_type, json json_doc)
+template <typename T>
+void JSONdb::load_document(Document* doc_ptr, json json_doc)
 {
-    Document *doc_ptr;
-    Requirement *req_ptr;
-    std::string doc_field;
-    SRATS srats;
-    HLR hlr;
-    LLR llr;
+    T req;
 
-    switch (doc_type)
+    // Populate the custom fields first
+    if constexpr (std::is_same_v<T, SRATS>)
     {
-    case DOC_CRS:
-        // Assign custom helpers
-        doc_ptr = as->get_crs();
-        //doc_ptr = dynamic_cast<CRS*>(as->get_crs());
-        doc_field = "crs_doc";
-        req_ptr = &srats;
-
-        // Populate custom fields
         doc_ptr->set_system_overview(json_doc["system_overview"]);
-        break;
-    case DOC_SRD:
-        // Assign custom helpers
-        doc_ptr = as->get_srd();
-        doc_field = "srd_doc";
-        req_ptr = &hlr;
-
-        // Populate custom fields
+        for (auto& id : requirement["linked_hlrs"])
+        {
+            //req.get_linked_hlrs()->push_back(...);
+        }
+    }
+    else if constexpr (std::is_same_v<T, HLR>)
+    {
         doc_ptr->set_software_overview(json_doc["software_overview"]);
-        break;
-    case DOC_SDD:
-        // Assign custom helpers
-        doc_ptr = as->get_sdd();
-        doc_field = "sdd_doc";
-        req_ptr = &llr;
-
-        // Populate custom fields
+    }
+    else if constexpr (std::is_same_v<T, LLR>)
+    {
         doc_ptr->set_design_overview(json_doc["design_overview"]);
-        break;
+    }
+    else
+    {
+        // Invalid type
     }
 
+    // Populate common fields
     doc_ptr->set_title(json_doc["title"]);
     doc_ptr->set_purpose(json_doc["purpose"]);
     doc_ptr->set_scope(json_doc["scope"]);
@@ -119,21 +100,22 @@ void JSONdb::load_document(AirborneSystem* as, DocType doc_type, json json_doc)
     doc_ptr->set_acronyms(json_doc["acronyms"]);
     doc_ptr->set_appendix(json_doc["appendix"]);
 
-    for (auto& req : json_doc["requirements"])
+    // Populate the requirements list
+    for (auto& requirement : json_doc["requirements"])
     {
         std::cout << "Entered" << std::endl;
-        req_ptr->set_rid(req["rid"]);
-        req_ptr->set_body(req["body"]);
-        req_ptr->set_comments(req["comments"]);
-        req_ptr->set_type(req["type"]);
-        req_ptr->set_level(req["level"]);
-        req_ptr->set_safety(req["safety"]);
-        req_ptr->set_derived(req["derived"]);
-        //req_ptr->get_linked_hlrs()->push_back(...);
+        req.set_rid(requirement["rid"]);
+        req.set_body(requirement["body"]);
+        req.set_comments(requirement["comments"]);
+        req.set_type(requirement["type"]);
+        req.set_level(requirement["level"]);
+        req.set_safety(requirement["safety"]);
+        req.set_derived(requirement["derived"]);
 
+        std::cout << "Created" << std::endl;
 
-        ((std::list<SRATS>*)doc_ptr->get_requirements_list_ptr())->push_back(*req_ptr);
-        //std::cout << "Loaded ID: " << doc_ptr->get_requirements_list_ptr()->back().get_rid() << std::endl;
+        ((std::list<T>*)doc_ptr->get_requirements_list_ptr())->push_back(req);
+        //std::cout << "Loaded ID: " << ((std::list<T>*)doc_ptr->get_requirements_list_ptr())->back().get_rid() << std::endl;
     }
 }
 

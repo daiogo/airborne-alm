@@ -19,7 +19,8 @@ public:
     //JSONdb();
     static void init();
     static bool load(App* app_ptr);
-    static void load_document(AirborneSystem* as, DocType doc_type, json json_doc);
+    template <typename T>
+    static void load_document(Document* doc_ptr, json json_doc);
     static bool save();
 };
 
