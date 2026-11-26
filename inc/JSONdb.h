@@ -14,13 +14,12 @@ class JSONdb {
 private:
     static std::string filepath;
     static std::fstream file;
-    static json j;
 
 public:
     //JSONdb();
     static void init();
     static bool load(App* app_ptr);
-    static void load_document(AirborneSystem* as, DocType doc_type, int idx);
+    static void load_document(AirborneSystem* as, DocType doc_type, json json_doc);
     static bool save();
 };
 

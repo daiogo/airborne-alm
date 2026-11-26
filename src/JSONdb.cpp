@@ -6,7 +6,6 @@
 //int Class::var = 0;
 std::string JSONdb::filepath;
 std::fstream JSONdb::file;
-json JSONdb::j;
 
 /*
 JSONdb::JSONdb()
@@ -24,25 +23,26 @@ bool JSONdb::load(App* app_ptr)
 {
     bool success = false;
     AirborneSystem as;
+    json json_file;
 
     file.open(filepath, std::ios::in);
 
     if (file.is_open())
     {
         // Load the file to memory
-        j << file;
+        json_file << file;
 
         // Parse and populate each system in the JSON array
-        for (int i = 0; i < j.size(); i++)
+        for (int i = 0; i < json_file.size(); i++)
         {
             // Load system fields
-            as.set_name(j[i]["name"]);
-            as.set_id_prefix(j[i]["id_prefix"]);
-            as.set_id_count(j[i]["id_count"]);
-            as.set_dal(j[i]["dal"]);
+            as.set_name(json_file[i]["name"]);
+            as.set_id_prefix(json_file[i]["id_prefix"]);
+            as.set_id_count(json_file[i]["id_count"]);
+            as.set_dal(json_file[i]["dal"]);
 
             // Load documents
-            load_document(&as, DOC_CRS, i);
+            load_document(&as, DOC_CRS, json_file[i]["crs_doc"]);
             //load_document(&as, DOC_SRD, i);
             //load_document(&as, DOC_SDD, i);
 
@@ -71,7 +71,7 @@ bool JSONdb::save()
     return success;
 }
 
-void JSONdb::load_document(AirborneSystem* as, DocType doc_type, int idx)
+void JSONdb::load_document(AirborneSystem* as, DocType doc_type, json json_doc)
 {
     Document *doc_ptr;
     Requirement *req_ptr;
@@ -90,7 +90,7 @@ void JSONdb::load_document(AirborneSystem* as, DocType doc_type, int idx)
         req_ptr = &srats;
 
         // Populate custom fields
-        doc_ptr->set_system_overview(j[idx][doc_field]["system_overview"]);
+        doc_ptr->set_system_overview(json_doc["system_overview"]);
         break;
     case DOC_SRD:
         // Assign custom helpers
@@ -99,7 +99,7 @@ void JSONdb::load_document(AirborneSystem* as, DocType doc_type, int idx)
         req_ptr = &hlr;
 
         // Populate custom fields
-        doc_ptr->set_software_overview(j[idx][doc_field]["software_overview"]);
+        doc_ptr->set_software_overview(json_doc["software_overview"]);
         break;
     case DOC_SDD:
         // Assign custom helpers
@@ -108,18 +108,18 @@ void JSONdb::load_document(AirborneSystem* as, DocType doc_type, int idx)
         req_ptr = &llr;
 
         // Populate custom fields
-        doc_ptr->set_design_overview(j[idx][doc_field]["design_overview"]);
+        doc_ptr->set_design_overview(json_doc["design_overview"]);
         break;
     }
 
-    doc_ptr->set_title(j[idx][doc_field]["title"]);
-    doc_ptr->set_purpose(j[idx][doc_field]["purpose"]);
-    doc_ptr->set_scope(j[idx][doc_field]["scope"]);
-    doc_ptr->set_referenced_docs(j[idx][doc_field]["referenced_docs"]);
-    doc_ptr->set_acronyms(j[idx][doc_field]["acronyms"]);
-    doc_ptr->set_appendix(j[idx][doc_field]["appendix"]);
+    doc_ptr->set_title(json_doc["title"]);
+    doc_ptr->set_purpose(json_doc["purpose"]);
+    doc_ptr->set_scope(json_doc["scope"]);
+    doc_ptr->set_referenced_docs(json_doc["referenced_docs"]);
+    doc_ptr->set_acronyms(json_doc["acronyms"]);
+    doc_ptr->set_appendix(json_doc["appendix"]);
 
-    for (auto& req : j[idx][doc_field]["requirements"])
+    for (auto& req : json_doc["requirements"])
     {
         std::cout << "Entered" << std::endl;
         req_ptr->set_rid(req["rid"]);
