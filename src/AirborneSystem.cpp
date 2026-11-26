@@ -1,11 +1,16 @@
 #include "AirborneSystem.h"
 #include "Document.h"
 
+AirborneSystem::AirborneSystem()
+{
+    id_count = 0;
+}
+
 AirborneSystem::AirborneSystem(std::string n, std::string i, char d)
 {
     name = n;
     id_prefix = i;
-    id_count = 0;   // Load from db
+    id_count = 0;
     dal = d;
 }
 void AirborneSystem::set_name(std::string n)
@@ -23,12 +28,12 @@ void AirborneSystem::set_id_count(unsigned int c)
     id_count = c;
 }
 
-void AirborneSystem::set_dal(char d)
+void AirborneSystem::set_dal(std::string d)
 {
     dal = d;
 }
 
-char AirborneSystem::get_dal()
+std::string AirborneSystem::get_dal()
 {
     return dal;
 }

@@ -21,7 +21,7 @@
             "referenced_docs": "",
             "acronyms": "",
             "appendix": "",
-            "system_overview": "",
+            "software_overview": "",
             "requirements": []
         },
         "sdd_doc": {
@@ -31,7 +31,7 @@
             "referenced_docs": "",
             "acronyms": "",
             "appendix": "",
-            "system_overview": "",
+            "design_overview": "",
             "requirements": []
         }
     },
@@ -88,7 +88,7 @@
             "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
             "acronyms": "N/A",
             "appendix": "N/A",
-            "system_overview": "This is the SRD software overview",
+            "software_overview": "This is the SRD software overview",
             "requirements": [
                 {
                     "rid": "FADEC-4",
@@ -132,7 +132,7 @@
             "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
             "acronyms": "N/A",
             "appendix": "N/A",
-            "system_overview": "This is the SDD design overview",
+            "design_overview": "This is the SDD design overview",
             "requirements": [
                                 {
                     "rid": "FADEC-7",

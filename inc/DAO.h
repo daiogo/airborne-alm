@@ -5,11 +5,12 @@
 
 class DAO {
 protected:
-    std::string filepath;
-    std::fstream file;
+    static std::string filepath;
+    static std::fstream file;
 
 public:
-    virtual bool load() = 0;
-    virtual bool save() = 0;
+    static void init();
+    static bool load();
+    static bool save();
 };
 

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Requirement.h"
+#include "SRATS.h"
+#include "HLR.h"
+#include "LLR.h"
 #include <string>
 #include <list>
 
@@ -40,7 +43,7 @@ public:
     virtual void add_requirement(Requirement req) = 0;
     virtual Requirement* get_requirement_ptr(std::string id) = 0;
     virtual bool delete_requirement(std::string id) = 0;
-    virtual std::list<Requirement*> get_requirements() = 0;
+    virtual std::list<Requirement*> fetch_requirements() = 0;
     virtual std::list<std::string>* get_requirement_ids() = 0;
     virtual std::string export_reqs_to_markdown() = 0;  // Put here to avoid function duplication
 
@@ -51,5 +54,6 @@ public:
     virtual void set_software_overview(std::string value);
     virtual std::string get_design_overview();
     virtual void set_design_overview(std::string value);
+    virtual void* get_requirements_list_ptr();
 };
 

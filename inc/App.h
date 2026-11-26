@@ -17,7 +17,6 @@ private:
     AirborneSystem *selected_context;
     Document *selected_document;
     UIState ui_state;
-    JSONdb dao;
 
 public:
     App();
@@ -37,5 +36,5 @@ public:
     void create_system();
     void present_req_edit_options(Requirement *req_ptr);
     void print_requirement(Requirement *req_ptr);
-    std::vector<AirborneSystem>& get_system_list();
+    std::vector<AirborneSystem>* get_system_list();
 };

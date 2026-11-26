@@ -89,3 +89,9 @@ void Document::set_design_overview(std::string value)
 {
 
 }
+
+void* Document::get_requirements_list_ptr()
+{
+
+}
+

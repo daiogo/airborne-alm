@@ -5,6 +5,7 @@
 #include "App.h"
 #include "Requirement.h"
 #include "UI.h"
+#include "JSONdb.h"
 
 App::App()
 {
@@ -40,7 +41,8 @@ void App::run()
 {
     // Init and load database
     std::cout << "Loading..." << std::endl;
-    dao.load();
+    JSONdb::init();
+    JSONdb::load(this);
 
     do {
         switch (ui_state)
@@ -63,7 +65,7 @@ void App::run()
     } while(ui_state != EXIT);
 
     std::cout << "Saving..." << std::endl;
-    dao.save();
+    //JSONdb::save();
     std::cout << "Exiting..." << std::endl;
 }
 
@@ -245,7 +247,7 @@ void App::read_requirement()
     int option = 0;
     std::string id;
     Requirement *req_ptr;
-    std::list<Requirement*> requirements_ptr = selected_document->get_requirements();
+    std::list<Requirement*> requirements_ptr = selected_document->fetch_requirements();
 
     // Print header
     system("cls");
@@ -816,8 +818,8 @@ void App::print_requirement(Requirement *req_ptr)
     }
 }
 
-std::vector<AirborneSystem>& App::get_system_list()
+std::vector<AirborneSystem>* App::get_system_list()
 {
-    return system_list;
+    return &system_list;
 }
 

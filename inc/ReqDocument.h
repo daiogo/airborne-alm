@@ -52,7 +52,7 @@ public:
         return success;
     }
 
-    std::list<Requirement*> get_requirements()
+    std::list<Requirement*> fetch_requirements()
     {
         std::list<Requirement*> req_ptrs;
 
@@ -130,6 +130,11 @@ public:
         }
 
         return req_section.str();
+    }
+
+    std::list<T>* get_requirements_list_ptr()
+    {
+        return &requirements;
     }
 
 };
