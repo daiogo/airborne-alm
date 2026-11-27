@@ -11,37 +11,13 @@ App::App()
 {
     // Start selecting document context
     ui_state = SYS;
-
-    /*
-    //temp
-    AirborneSystem as1("Landing Gear", "LG", 'B');
-    AirborneSystem as2("Motor", "FADEC", 'A');
-
-    as2.get_crs()->add_requirement(Requirement("FADEC-1","test1","meh",NON_FUNCTIONAL,false,false));
-    as2.get_crs()->add_requirement(Requirement("FADEC-2","test2","meh",FUNCTIONAL,false,false));
-    as2.get_crs()->add_requirement(Requirement("FADEC-3","test3","meh",NON_FUNCTIONAL,false,false));
-    as2.get_srd()->add_requirement(Requirement("FADEC-4","test4","meh",FUNCTIONAL,false,false));
-    as2.get_srd()->add_requirement(Requirement("FADEC-5","test5","meh",NON_FUNCTIONAL,false,false));
-    as2.get_srd()->add_requirement(Requirement("FADEC-6","test6","meh",FUNCTIONAL,false,false));
-    as2.get_sdd()->add_requirement(Requirement("FADEC-7","test7","meh",NON_FUNCTIONAL,false,false));
-    as2.get_sdd()->add_requirement(Requirement("FADEC-8","test8","meh",FUNCTIONAL,false,false));
-    as2.get_sdd()->add_requirement(Requirement("FADEC-9","test9","meh",NON_FUNCTIONAL,false,false));
-
-    system_list.push_back(as1);
-    system_list.push_back(as2);
-    */
-}
-
-void App::load_database()
-{
-    std::cout << "load database" << std::endl;
 }
 
 void App::run()
 {
     // Init and load database
     std::cout << "Loading..." << std::endl;
-    //JSONdb::init();
+    JSONdb::init();
     JSONdb::load(this);
 
     do {

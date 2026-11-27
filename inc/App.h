@@ -20,8 +20,6 @@ private:
 
 public:
     App();
-    void load_database();
-    void save_database();
     void run();
     UIState select_system();
     UIState select_document();

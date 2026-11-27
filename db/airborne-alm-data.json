@@ -1,170 +1,259 @@
 [
     {
-        "name": "Landing Gear",
-        "id_prefix": "LG",
-        "id_count": 0,
-        "dal": "A",
         "crs_doc": {
-            "title": "CRS - Component Requirement Specification",
-            "purpose": "",
-            "scope": "",
-            "referenced_docs": "",
             "acronyms": "",
             "appendix": "",
+            "purpose": "",
+            "referenced_docs": "",
+            "requirements": [
+                {
+                    "body": "asdhasd",
+                    "comments": "asdasd",
+                    "derived": false,
+                    "level": 0,
+                    "linked_hlrs": [
+                        "LG-1"
+                    ],
+                    "rid": "LG-5",
+                    "safety": false,
+                    "type": 1
+                }
+            ],
+            "scope": "",
             "system_overview": "",
-            "requirements": []
+            "title": "CRS - Component Requirement Specification"
         },
-        "srd_doc": {
-            "title": "SRD - Software Requirements Description",
-            "purpose": "",
-            "scope": "",
-            "referenced_docs": "",
-            "acronyms": "",
-            "appendix": "",
-            "software_overview": "",
-            "requirements": []
-        },
+        "dal": "A",
+        "id_count": 6,
+        "id_prefix": "LG",
+        "name": "Landing Gear",
         "sdd_doc": {
-            "title": "SDD - Software Design Description",
-            "purpose": "",
-            "scope": "",
-            "referenced_docs": "",
             "acronyms": "",
             "appendix": "",
             "design_overview": "",
-            "requirements": []
+            "purpose": "",
+            "referenced_docs": "",
+            "requirements": [
+                {
+                    "body": "dfgdfgfd",
+                    "comments": "asdas",
+                    "derived": false,
+                    "level": 2,
+                    "linked_hlrs": [
+                        "LG-1"
+                    ],
+                    "rid": "LG-4",
+                    "safety": true,
+                    "type": 1
+                }
+            ],
+            "scope": "",
+            "title": "SDD - Software Design Description"
+        },
+        "srd_doc": {
+            "acronyms": "",
+            "appendix": "",
+            "purpose": "",
+            "referenced_docs": "",
+            "requirements": [
+                {
+                    "body": "sdfdsf",
+                    "comments": "sdf",
+                    "derived": true,
+                    "level": 1,
+                    "linked_llrs": [
+                        "LG-4"
+                    ],
+                    "linked_srats": [
+                        "LG-5"
+                    ],
+                    "rid": "LG-1",
+                    "safety": true,
+                    "type": 0
+                },
+                {
+                    "body": "fgfd",
+                    "comments": "fdgdf",
+                    "derived": false,
+                    "level": 1,
+                    "linked_llrs": [],
+                    "linked_srats": [],
+                    "rid": "LG-2",
+                    "safety": false,
+                    "type": 1
+                },
+                {
+                    "body": "1",
+                    "comments": "fdgdg",
+                    "derived": true,
+                    "level": 1,
+                    "linked_llrs": [],
+                    "linked_srats": [],
+                    "rid": "LG-3",
+                    "safety": true,
+                    "type": 0
+                },
+                {
+                    "body": "meh",
+                    "comments": "meh",
+                    "derived": false,
+                    "level": 1,
+                    "linked_llrs": [],
+                    "linked_srats": [],
+                    "rid": "LG-6",
+                    "safety": true,
+                    "type": 0
+                }
+            ],
+            "scope": "",
+            "software_overview": "",
+            "title": "SRD - Software Requirements Description"
         }
     },
     {
-        "name": "Motor",
-        "id_prefix": "FADEC",
-        "id_count": 9,
-        "dal": "A",
         "crs_doc": {
-            "title": "CRS - Component Requirement Specification",
-            "purpose": "Describe here the goal for which this document is being written.",
-            "scope": "Describe what will be done and what will not be done in this document.",
-            "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
             "acronyms": "N/A",
             "appendix": "N/A",
-            "system_overview": "This is the CRS system overview",
+            "purpose": "Describe here the goal for which this document is being written.",
+            "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
             "requirements": [
                 {
-                    "rid": "FADEC-1",
                     "body": "test1",
                     "comments": "meh",
-                    "type": 1,
-                    "level": 0,
-                    "safety": false,
                     "derived": false,
-                    "linked_hlrs": ["FADEC-4"]
+                    "level": 0,
+                    "linked_hlrs": [
+                        "FADEC-4"
+                    ],
+                    "rid": "FADEC-1",
+                    "safety": false,
+                    "type": 1
                 },
                 {
-                    "rid": "FADEC-2",
                     "body": "test2",
                     "comments": "meh",
-                    "type": 0,
-                    "level": 0,
-                    "safety": true,
                     "derived": true,
-                    "linked_hlrs": ["FADEC-4"]
+                    "level": 0,
+                    "linked_hlrs": [
+                        "FADEC-4"
+                    ],
+                    "rid": "FADEC-2",
+                    "safety": true,
+                    "type": 0
                 },
                 {
-                    "rid": "FADEC-3",
                     "body": "test3",
                     "comments": "meh",
-                    "type": 1,
+                    "derived": false,
                     "level": 0,
+                    "linked_hlrs": [],
+                    "rid": "FADEC-3",
                     "safety": false,
-                    "derived": false,
-                    "linked_hlrs": []
+                    "type": 1
                 }
-            ]
-        },
-        "srd_doc": {
-            "title": "SRD - Software Requirements Description",
-            "purpose": "Describe here the goal for which this document is being written.",
+            ],
             "scope": "Describe what will be done and what will not be done in this document.",
-            "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
-            "acronyms": "N/A",
-            "appendix": "N/A",
-            "software_overview": "This is the SRD software overview",
-            "requirements": [
-                {
-                    "rid": "FADEC-4",
-                    "body": "test4",
-                    "comments": "meh",
-                    "type": 0,
-                    "level": 1,
-                    "safety": true,
-                    "derived": true,
-                    "linked_srats": ["FADEC-1", "FADEC-2"],
-                    "linked_llrs": ["FADEC-8", "FADEC-9"]
-                },
-                {
-                    "rid": "FADEC-5",
-                    "body": "test5",
-                    "comments": "meh",
-                    "type": 0,
-                    "level": 1,
-                    "safety": false,
-                    "derived": false,
-                    "linked_srats": [],
-                    "linked_llrs": []
-                },
-                {
-                    "rid": "FADEC-6",
-                    "body": "test6",
-                    "comments": "meh",
-                    "type": 0,
-                    "level": 1,
-                    "safety": true,
-                    "derived": true,
-                    "linked_srats": [],
-                    "linked_llrs": []
-                }
-            ]
+            "system_overview": "This is the CRS system overview",
+            "title": "CRS - Component Requirement Specification"
         },
+        "dal": "A",
+        "id_count": 9,
+        "id_prefix": "FADEC",
+        "name": "Motor",
         "sdd_doc": {
-            "title": "SDD - Software Design Description",
-            "purpose": "Describe here the goal for which this document is being written.",
-            "scope": "Describe what will be done and what will not be done in this document.",
-            "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
             "acronyms": "N/A",
             "appendix": "N/A",
             "design_overview": "This is the SDD design overview",
+            "purpose": "Describe here the goal for which this document is being written.",
+            "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
             "requirements": [
-                                {
-                    "rid": "FADEC-7",
+                {
                     "body": "test7",
                     "comments": "meh",
-                    "type": 1,
-                    "level": 2,
-                    "safety": false,
                     "derived": false,
-                    "linked_hlrs": []
+                    "level": 2,
+                    "linked_hlrs": null,
+                    "rid": "FADEC-7",
+                    "safety": false,
+                    "type": 1
                 },
                 {
-                    "rid": "FADEC-8",
                     "body": "test8",
                     "comments": "meh",
-                    "type": 0,
-                    "level": 2,
-                    "safety": true,
                     "derived": true,
-                    "linked_hlrs": ["FADEC-4"]
+                    "level": 2,
+                    "linked_hlrs": [
+                        "FADEC-4"
+                    ],
+                    "rid": "FADEC-8",
+                    "safety": true,
+                    "type": 0
                 },
                 {
-                    "rid": "FADEC-9",
                     "body": "test9",
                     "comments": "meh",
-                    "type": 1,
-                    "level": 2,
-                    "safety": false,
                     "derived": false,
-                    "linked_hlrs": ["FADEC-4"]
+                    "level": 2,
+                    "linked_hlrs": [
+                        "FADEC-4"
+                    ],
+                    "rid": "FADEC-9",
+                    "safety": false,
+                    "type": 1
                 }
-            ]
+            ],
+            "scope": "Describe what will be done and what will not be done in this document.",
+            "title": "SDD - Software Design Description"
+        },
+        "srd_doc": {
+            "acronyms": "N/A",
+            "appendix": "N/A",
+            "purpose": "Describe here the goal for which this document is being written.",
+            "referenced_docs": "List all documents referenced to the project. It can be other project documents, industry standards, textbooks, etc.",
+            "requirements": [
+                {
+                    "body": "test4",
+                    "comments": "meh",
+                    "derived": true,
+                    "level": 1,
+                    "linked_llrs": [
+                        "FADEC-8",
+                        "FADEC-9"
+                    ],
+                    "linked_srats": [
+                        "FADEC-1",
+                        "FADEC-2"
+                    ],
+                    "rid": "FADEC-4",
+                    "safety": true,
+                    "type": 0
+                },
+                {
+                    "body": "test5",
+                    "comments": "meh",
+                    "derived": false,
+                    "level": 1,
+                    "linked_llrs": [],
+                    "linked_srats": [],
+                    "rid": "FADEC-5",
+                    "safety": false,
+                    "type": 0
+                },
+                {
+                    "body": "test6",
+                    "comments": "meh",
+                    "derived": true,
+                    "level": 1,
+                    "linked_llrs": [],
+                    "linked_srats": [],
+                    "rid": "FADEC-6",
+                    "safety": true,
+                    "type": 0
+                }
+            ],
+            "scope": "Describe what will be done and what will not be done in this document.",
+            "software_overview": "This is the SRD software overview",
+            "title": "SRD - Software Requirements Description"
         }
     }
 ]

@@ -1,11 +1,7 @@
 #include "AirborneSystem.h"
 #include "JSONdb.h"
-#include <iomanip>
-#include <iostream>
-#include <cstdlib>
 
-std::string JSONdb::filepath = "./db/airborne-alm-data.json";
-std::string JSONdb::filepath1 = "./db/airborne-alm-data1.json";
+std::string JSONdb::filepath;
 std::fstream JSONdb::file;
 
 /*
@@ -17,19 +13,16 @@ JSONdb::JSONdb()
 
 void JSONdb::init()
 {
-    //filepath = "./db/airborne-alm-data.json";
+    filepath = "./db/airborne-alm-data.json";
 }
 
 bool JSONdb::save(App* app_ptr)
 {
     bool success = false;
     json json_file = json::array();
-    json json_linked_reqs = json::array();
-    json json_reqs = json::array();
     json json_as;
-    json json_req;
 
-    file.open(filepath1, std::ios::out);
+    file.open(filepath, std::ios::out);
 
     if (file.is_open())
     {
@@ -55,8 +48,6 @@ bool JSONdb::save(App* app_ptr)
         file.close();
     }
 
-    system("pause");
-
     return success;
 }
 
@@ -65,6 +56,7 @@ json JSONdb::save_document(Document* doc_ptr)
 {
     T req;
     json json_doc;
+    json json_req;
 
     // Populate the custom fields first
     if constexpr (std::is_same_v<T, SRATS>)
@@ -88,44 +80,42 @@ json JSONdb::save_document(Document* doc_ptr)
     json_doc["acronyms"] = doc_ptr->get_acronyms();
     json_doc["appendix"] = doc_ptr->get_appendix();
 
-    /*
-    // Populate the requirements list
-    for (auto& requirement : json_doc["requirements"])
+
+    for (auto& requirement : *((std::list<T>*)doc_ptr->get_requirements_list_ptr()))
     {
-        req.set_rid(requirement["rid"]);
-        req.set_body(requirement["body"]);
-        req.set_comments(requirement["comments"]);
-        req.set_type(requirement["type"]);
-        req.set_level(requirement["level"]);
-        req.set_safety(requirement["safety"]);
-        req.set_derived(requirement["derived"]);
+        json_req["rid"] = requirement.get_rid();
+        json_req["body"] = requirement.get_body();
+        json_req["comments"] = requirement.get_comments();
+        json_req["type"] = requirement.get_type();
+        json_req["level"] = requirement.get_level();
+        json_req["safety"] = requirement.get_safety();
+        json_req["derived"] = requirement.get_derived();
 
         // Populate the linked requirements
         if constexpr (std::is_same_v<T, SRATS> || std::is_same_v<T, LLR>)
         {
-            req.get_linked_hlrs()->clear();
-            for (auto& id : requirement["linked_hlrs"])
+            json_req["linked_hlrs"].clear();
+            for (auto& id : *(requirement.get_linked_hlrs()))
             {
-                req.get_linked_hlrs()->push_back(id);
+                json_req["linked_hlrs"].push_back(id);
             }
         }
         else if constexpr (std::is_same_v<T, HLR>)
         {
-            req.get_linked_srats()->clear();
-            req.get_linked_llrs()->clear();
-            for (auto& id : requirement["linked_srats"])
+            json_req["linked_srats"].clear();
+            json_req["linked_llrs"].clear();
+            for (auto& id : *(requirement.get_linked_srats()))
             {
-                req.get_linked_srats()->push_back(id);
+                json_req["linked_srats"].push_back(id);
             }
-            for (auto& id : requirement["linked_llrs"])
+            for (auto& id : *(requirement.get_linked_llrs()))
             {
-                req.get_linked_llrs()->push_back(id);
+                json_req["linked_llrs"].push_back(id);
             }
         }
 
-        ((std::list<T>*)doc_ptr->get_requirements_list_ptr())->push_back(req);
+        json_doc["requirements"].push_back(json_req);
     }
-    */
 
     return json_doc;
 }
@@ -159,6 +149,11 @@ bool JSONdb::load(App* app_ptr)
 
             // Load system into list
             app_ptr->get_system_list()->push_back(as);
+
+            // Clear requirements list of the helper variable as
+            as.get_crs()->get_requirements_list_ptr()->clear();
+            as.get_srd()->get_requirements_list_ptr()->clear();
+            as.get_sdd()->get_requirements_list_ptr()->clear();
         }
 
         success = true;
