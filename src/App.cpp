@@ -41,7 +41,7 @@ void App::run()
 {
     // Init and load database
     std::cout << "Loading..." << std::endl;
-    JSONdb::init();
+    //JSONdb::init();
     JSONdb::load(this);
 
     do {
@@ -65,7 +65,7 @@ void App::run()
     } while(ui_state != EXIT);
 
     std::cout << "Saving..." << std::endl;
-    //JSONdb::save();
+    JSONdb::save(this);
     std::cout << "Exiting..." << std::endl;
 }
 
@@ -96,7 +96,7 @@ UIState App::select_system()
     {
         // Create new AirborneSystem
         create_system();
-        // load to db
+
         return_state = SYS;
     }
     else if (option == system_list.size() + 2ULL)
@@ -253,9 +253,6 @@ void App::read_requirement()
     system("cls");
     std::cout << "---Display Requirement---" << std::endl;
 
-    // Fetch from db
-    // TBD
-
     // Run dialog
     option = UI::options_dialog("Select an option: ",
                                 {"Search requirement by ID",
@@ -310,10 +307,6 @@ void App::update_requirement()
     // Print header
     system("cls");
     std::cout << "---Edit Requirement---" << std::endl;
-    // search requirement
-    // ask what needs to be edited
-    // edit the selected field
-    // update db
 
     id = UI::string_dialog("Type the requirement ID with no spaces: ");
 

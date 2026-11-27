@@ -38,7 +38,7 @@
     {
         "name": "Motor",
         "id_prefix": "FADEC",
-        "id_count": 10,
+        "id_count": 9,
         "dal": "A",
         "crs_doc": {
             "title": "CRS - Component Requirement Specification",
